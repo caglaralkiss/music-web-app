@@ -1,0 +1,28 @@
+{
+  "name": "music-web-app-backend",
+  "version": "1.0.0",
+  "description": "Backend project of Music-Web-App",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "noframework",
+    "typescript",
+    "music",
+    "app"
+  ],
+  "author": "Caglar Alkis",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^3.5.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0"
+  }
+}
