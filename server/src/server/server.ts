@@ -21,7 +21,8 @@ function httpServer(): Server {
 
             console.log(await bodyParser.performParse(req))
         } catch (e) {
-            console.log(e);
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(e.getJson()));
         }
     })
 }

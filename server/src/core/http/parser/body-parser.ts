@@ -24,7 +24,7 @@ export abstract class BodyParser {
         try {
             return await this.parseBehavior.parse(req);
         } catch (e) {
-            throw new Error('JSON Parse error');
+            throw e;
         }
     }
 }

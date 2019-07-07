@@ -6,6 +6,7 @@
 
 import {ContentType} from "../core/http/content-type";
 import {BodyParser, FormParser, JsonParser} from "../core/http/parser";
+import {ParseError} from "../core/error/http/parser/parse-error";
 
 
 /**
@@ -25,6 +26,6 @@ export function getParser(contentType: ContentType): BodyParser {
         case ContentType.MULTIPART_FORM_DATA:
             return new FormParser();
         default:
-            throw new Error('Undefined Content Type!');
+            throw new ParseError('Undefined Content Type!');
     }
 }

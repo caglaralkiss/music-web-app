@@ -4,6 +4,7 @@
 
 import {ParseBehavior} from "../parse-behavior";
 import {IncomingMessage} from "http";
+import {JsonParseError} from "../../../error/http/parser/json-parse-error";
 
 export class JsonStrategy implements ParseBehavior {
    parse(req: IncomingMessage): Promise<object> {
@@ -19,7 +20,7 @@ export class JsonStrategy implements ParseBehavior {
           });
 
           req.on('error', () => {
-              reject(new Error('Error on fetching stream'));
+              reject(new JsonParseError('Error on fetching stream'));
           })
        });
    }
