@@ -6,18 +6,35 @@
 
 import {createServer, IncomingMessage, Server, ServerResponse} from "http";
 import {Config} from "../config/config";
+import {BodyParser} from "../core/http/parser";
+import {ContentType} from "../core/http/content-type";
+import {getParser} from "./helpers";
 
-export default class HttpServer {
-    private static server: Server = createServer((req: IncomingMessage, res: ServerResponse) => {
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello World!', 'utf-8');
-    });
+function httpServer(): Server {
+    let bodyParser: BodyParser;
+    let contentType: ContentType;
 
-    static init() {
-        const config = Config.getInstance();
+    return createServer(async (req: IncomingMessage, res: ServerResponse) => {
+        try {
+            contentType = req.headers['content-type'] as ContentType;
+            bodyParser = getParser(contentType);
 
-        HttpServer.server.listen(config.port, () => {
-            console.log(`Server is listening requests on port: ${config.port} at environment: ${config.environment}`)
-        });
-    }
+            console.log(await bodyParser.performParse(req))
+        } catch (e) {
+            console.log(e);
+        }
+    })
+}
+
+function init() {
+    const config = Config.getInstance();
+
+    httpServer().listen(config.port, () => {
+        console.log(`Server is listening requests on port: ${config.port} at environment: ${config.environment}`);
+    })
+}
+
+export default {
+    httpServer,
+    init
 }
