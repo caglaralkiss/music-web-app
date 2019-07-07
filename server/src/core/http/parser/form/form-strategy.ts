@@ -1,7 +1,7 @@
 import {ParseBehavior} from "../parse-behavior";
 import {IncomingMessage} from "http";
 import * as formidable from 'formidable';
-import {FormParseError} from "../../../error/http/parser/form-parse-error";
+import {FormParseError} from "../../../error/http/parser";
 
 export class FormStrategy implements ParseBehavior {
     parse(req: IncomingMessage): Promise<{fields: any, files: any}> {

@@ -4,7 +4,7 @@
 
 import {ParseBehavior} from "../parse-behavior";
 import {IncomingMessage} from "http";
-import {JsonParseError} from "../../../error/http/parser/json-parse-error";
+import {JsonParseError} from "../../../error/http/parser";
 
 export class JsonStrategy implements ParseBehavior {
    parse(req: IncomingMessage): Promise<object> {
