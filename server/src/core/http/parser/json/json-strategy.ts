@@ -16,7 +16,12 @@ export class JsonStrategy implements ParseBehavior {
           });
 
           req.on('end', () => {
-              resolve(JSON.parse(Buffer.concat(buffer).toString()));
+              try {
+                  const bufferObj = JSON.parse(Buffer.concat(buffer).toString());
+                  resolve(bufferObj);
+              } catch (e) {
+                  resolve({})
+              }
           });
 
           req.on('error', () => {
