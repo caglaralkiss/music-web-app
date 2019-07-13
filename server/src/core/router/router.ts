@@ -1,9 +1,16 @@
+/**
+ * Router class handles the problem of passing req&res objects to proper Route.
+ *
+ * @author Caglar Alkis
+ */
+
 import {AppRequest, ContentType, HttpResponse, StatusCode} from "../http";
 import {ServerResponse} from "http";
 import {Route} from "./route";
 import {RouterError} from "../error/router/router-error";
 
 export class Router {
+    /* Assigned routes */
     get routes(): Array<Route> {
         return this._routes;
     }
@@ -14,9 +21,15 @@ export class Router {
         this._routes = routes;
     }
 
+    /**
+     * Pass req(i.e @Link {AppRequest}) and res objects to the defined route to process request&response
+     *
+     * @param req
+     * @param res
+     */
     async passRequestToRoute(req: AppRequest, res: ServerResponse): Promise<void> {
         try {
-            const route: Route = this._findRoute(req.path);
+            const route: Route = this.findRoute(req.path);
 
             const {status, payload, headers}: HttpResponse = await route.passToController(req);
             
@@ -48,7 +61,14 @@ export class Router {
         }
     }
 
-    private _findRoute(path: string): Route {
+    /**
+     * Find the proper route based on the path param.
+     * If there is no route with given path, it throws {@link RouterError}
+     *
+     * @param path
+     * @return route
+     */
+    findRoute(path: string): Route {
         const route = this.routes.find((route) => route.path === path);
 
         if (route) {

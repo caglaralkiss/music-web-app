@@ -1,3 +1,9 @@
+/**
+ * Controller interface
+ *
+ * @author Caglar Alkis
+ */
+
 import {AppRequest, HttpResponse} from "../http";
 
 export interface Controller {
