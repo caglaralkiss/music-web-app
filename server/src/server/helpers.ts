@@ -4,9 +4,9 @@
  * @author Caglar Alkis
  */
 
-import {ContentType} from "../core/http/content-type";
+import {ContentType} from "../core/http";
 import {BodyParser, FormParser, JsonParser} from "../core/http/parser";
-import {ParseError} from "../core/error/http/parser/parse-error";
+import {ParseError} from "../core/error/http/parser";
 
 
 /**
