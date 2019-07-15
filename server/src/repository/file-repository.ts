@@ -1,13 +1,13 @@
 import {CrudRepository} from "./crud-repository";
 import {Config} from "../config/config";
 import {
-    DirectoryNotExistError,
-    FileDeleteError,
-    FileNotExistsError,
-    FileReadError, FileWriteError
-} from "../core/error/repository/file-errors";
+    RepositoryReadError,
+    RepositoryDeleteError,
+    RepositoryWriteError,
+    EntityNotExistsError,
+} from "../core/error/repository/repository-error";
 
-export class FileRepository<T extends { id: ID }, ID> implements CrudRepository<T, ID> {
+export abstract class FileRepository<T extends { id: ID }, ID> implements CrudRepository<T, ID> {
     /**
      * Path of the directory.
      */
@@ -40,12 +40,7 @@ export class FileRepository<T extends { id: ID }, ID> implements CrudRepository<
 
             return files.length;
         } catch (e) {
-            switch (e.code) {
-                case 'ENOENT':
-                    throw new DirectoryNotExistError(`${this.dir} does not exists!`);
-                default:
-                    throw new FileReadError('Undefined error on reading directory');
-            }
+            throw new RepositoryReadError(e.message);
         }
     }
 
@@ -55,9 +50,10 @@ export class FileRepository<T extends { id: ID }, ID> implements CrudRepository<
         } catch (err) {
             switch (err.code) {
                 case 'ENOENT':
-                    throw new FileNotExistsError(`${entity.id.toString()} does not exists!`);
+                    throw new EntityNotExistsError(`${entity.id.toString()} does not exists!`);
                 default:
-                    throw new FileDeleteError(`Undefined error on deleting entity`);
+                    const message = `Undefined error on deleting entity. Reason: ${err.message}`;
+                    throw new RepositoryDeleteError(message);
             }
         }
     }
@@ -74,9 +70,10 @@ export class FileRepository<T extends { id: ID }, ID> implements CrudRepository<
         } catch (err) {
             switch (err.code) {
                 case 'ENOENT':
-                    throw new FileNotExistsError(`${id.toString()} does not exists!`);
+                    throw new EntityNotExistsError(`${id.toString()} does not exists!`);
                 default:
-                    throw new FileDeleteError(`Undefined error on deleting entity`);
+                    const message = `Undefined error on deleting entity. Reason: ${err.message}`;
+                    throw new RepositoryDeleteError(message);
             }
         }
     }
@@ -114,9 +111,10 @@ export class FileRepository<T extends { id: ID }, ID> implements CrudRepository<
         } catch (e) {
             switch (e.code) {
                 case 'ENOENT':
-                    throw new FileNotExistsError(`${id.toString()} does not exists`);
+                    throw new EntityNotExistsError(`${id.toString()} does not exists`);
                 default:
-                    throw new FileReadError(`Undefined error on reading file`);
+                    const message = `Undefined error on reading file. Reason: ${e.message}`;
+                    throw new RepositoryReadError(message);
             }
         }
     }
@@ -128,7 +126,7 @@ export class FileRepository<T extends { id: ID }, ID> implements CrudRepository<
 
             return entity;
         } catch (err) {
-            throw new FileWriteError(`${entity.id.toString()} does not write to directory.${err}`)
+            throw new RepositoryWriteError(`${entity.id.toString()} does not write to directory.${err.message}`)
         }
     }
 
