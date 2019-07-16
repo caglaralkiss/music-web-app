@@ -4,7 +4,7 @@
  * @author Caglar Alkis
  */
 
-import {AppRequest, ContentType, HttpResponse, StatusCode} from "../http";
+import {AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode} from "../http";
 import {ServerResponse} from "http";
 import {Route} from "./route";
 import {RouterError} from "../error/router/router-error";
@@ -49,7 +49,7 @@ export class Router {
             switch (true) {
                 default:
                 case e instanceof RouterError:
-                    const httpResponse =  new HttpResponse.Builder()
+                    const httpResponse =  new ResponseBuilder()
                         .setStatus(StatusCode.NOT_FOUND)
                         .setHeaders({'content-type': ContentType.APPLICATION_JSON})
                         .setPayload({})

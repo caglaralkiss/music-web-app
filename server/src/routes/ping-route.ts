@@ -5,7 +5,7 @@
  */
 
 import {Controller, Route} from "../core/router";
-import {AppRequest, ContentType, HttpResponse} from "../core/http";
+import {AppRequest, ContentType, HttpResponse, ResponseBuilder} from "../core/http";
 
 export class PingRoute extends Route {
     /**
@@ -22,7 +22,7 @@ export class PingRoute extends Route {
      * @param req
      */
     async passToController(req: AppRequest): Promise<HttpResponse> {
-        return new HttpResponse.Builder()
+        return new ResponseBuilder()
             .setStatus(200)
             .setHeaders({'content-type': ContentType.APPLICATION_JSON})
             .setPayload({})
