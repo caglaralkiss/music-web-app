@@ -12,7 +12,7 @@ export class RepositoryWriteError extends BaseError {
     constructor(message: string) {
         super(message);
 
-        Object.setPrototypeOf(this, RepositoryWriteError);
+        Object.setPrototypeOf(this, RepositoryWriteError.prototype);
     }
 }
 
@@ -20,7 +20,7 @@ export class EntityNotExistsError extends BaseError {
     constructor(message: string) {
         super(message);
 
-        Object.setPrototypeOf(this, EntityNotExistsError);
+        Object.setPrototypeOf(this, EntityNotExistsError.prototype);
     }
 }
 
@@ -28,6 +28,6 @@ export class RepositoryDeleteError extends BaseError {
     constructor(message: string) {
         super(message);
 
-        Object.setPrototypeOf(this, RepositoryDeleteError);
+        Object.setPrototypeOf(this, RepositoryDeleteError.prototype);
     }
 }

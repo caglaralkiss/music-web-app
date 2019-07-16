@@ -4,7 +4,7 @@ export class UserNotExistsError extends BaseError {
     constructor(message: string) {
         super(message);
 
-        Object.setPrototypeOf(this, UserNotExistsError);
+        Object.setPrototypeOf(this, UserNotExistsError.prototype);
     }
 }
 
@@ -12,6 +12,6 @@ export class UserAlreadyExistsError extends BaseError {
     constructor(message: string) {
         super(message);
 
-        Object.setPrototypeOf(this, UserAlreadyExistsError);
+        Object.setPrototypeOf(this, UserAlreadyExistsError.prototype);
     }
 }
