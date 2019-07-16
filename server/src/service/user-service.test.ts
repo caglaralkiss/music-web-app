@@ -1,6 +1,7 @@
 import {UserService} from "./user-service";
 import {UserRepository} from "../repository/user-repository";
 import {User} from "../domain/user";
+import {UserAlreadyExistsError, UserNotExistsError} from "../core/error/service/user-error";
 
 describe('UserService', () => {
     let userService: UserService;
@@ -66,6 +67,16 @@ describe('UserService', () => {
         expect(userRepository.save).toHaveBeenCalledWith(user);
     });
 
+    test('should throw UserNotExists error when approach to update non-exist user', async () => {
+        spyOn(userRepository, 'existsById').and.returnValue(Promise.resolve(false));
+
+        try {
+            await userService.updateUser({} as User);
+        } catch (e) {
+            expect(e).toBeInstanceOf(UserNotExistsError)
+        }
+    });
+
     test('should save user', async () => {
        const user: User = {id: '1'} as User;
 
@@ -76,5 +87,16 @@ describe('UserService', () => {
 
         expect(userRepository.existsById).toHaveBeenCalledWith(user.id);
         expect(userRepository.save).toHaveBeenCalledWith(user);
+    });
+
+
+    test('should throw UserAlreadyExists error when approach to save already existed user', async () => {
+        spyOn(userRepository, 'existsById').and.returnValue(Promise.resolve(true));
+
+        try {
+            await userService.createUser({} as User);
+        } catch (e) {
+            expect(e).toBeInstanceOf(UserAlreadyExistsError);
+        }
     });
 });
