@@ -7,45 +7,51 @@
 import {StatusCode} from "./status-code";
 import {OutgoingHttpHeaders} from "http";
 
-export class HttpResponse {
+export class HttpResponse<T = any> {
     status: StatusCode;
     headers: OutgoingHttpHeaders;
-    payload: any;
+    payload: T;
 
-    constructor(build: any) {
-        this.status = build.status;
-        this.headers = build.headers;
-        this.payload = build.payload;
+    constructor(responseBuilder: ResponseBuilder<T>) {
+        this.status = responseBuilder.status;
+        this.headers = responseBuilder.headers;
+        this.payload = responseBuilder.payload;
+    }
+}
+
+export class ResponseBuilder<T> {
+    private _status: StatusCode;
+    private _headers: OutgoingHttpHeaders;
+    private _payload: T;
+
+    constructor() {}
+
+    setStatus(status: StatusCode) {
+        this._status = status;
+        return this;
     }
 
-    static get Builder() {
-        class Builder {
-            private status: StatusCode;
-            private headers: OutgoingHttpHeaders;
-            private payload: any;
+    setHeaders(headers: OutgoingHttpHeaders) {
+        this._headers = headers;
+        return this;
+    }
 
-            constructor() {}
+    setPayload(payload: T) {
+        this._payload = payload;
+        return this;
+    }
 
-            setStatus(status: StatusCode) {
-                this.status = status;
-                return this;
-            }
+    build() {
+        return new HttpResponse<T>(this);
+    }
 
-            setHeaders(headers: OutgoingHttpHeaders) {
-                this.headers = headers;
-                return this;
-            }
-
-            setPayload(payload: any) {
-                this.payload = payload;
-                return this;
-            }
-
-            build() {
-                return new HttpResponse(this);
-            }
-        }
-
-        return Builder;
+    get payload(): T {
+        return this._payload;
+    }
+    get headers(): OutgoingHttpHeaders {
+        return this._headers;
+    }
+    get status(): StatusCode {
+        return this._status;
     }
 }
