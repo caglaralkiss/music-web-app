@@ -4,6 +4,9 @@ import fs from "../util/promisified/fs";
 describe('FileRepository', () => {
     let fileRepository: FileRepository<MockModel, string>;
 
+    class MockRepository extends FileRepository<MockModel, string> {
+    }
+
     interface MockModel {
         id: string,
         data: Array<any>
@@ -13,7 +16,7 @@ describe('FileRepository', () => {
     const mockExt = 'json';
 
     beforeEach(() => {
-        fileRepository = new FileRepository<MockModel, string>({fs, ext: mockExt, dir: mockDir});
+        fileRepository = new MockRepository({fs, ext: mockExt, dir: mockDir});
     });
 
     afterEach(() => {

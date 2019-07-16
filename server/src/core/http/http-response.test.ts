@@ -1,9 +1,9 @@
-import {HttpResponse} from "./http-response";
+import {HttpResponse, ResponseBuilder} from "./http-response";
 import {StatusCode} from "./status-code";
 
 describe('HttpResponse', () => {
    test('should build a HttpResponse object', () => {
-       const response: HttpResponse = new HttpResponse.Builder()
+       const response: HttpResponse = new ResponseBuilder()
            .setHeaders({'Content-Type': 'application/json'})
            .setPayload({})
            .setStatus(StatusCode.NOT_FOUND)
@@ -14,7 +14,7 @@ describe('HttpResponse', () => {
 
    test('should get properties from created object', () => {
        const statusCode = StatusCode.NOT_FOUND;
-       const responseWithStatusCode = new HttpResponse.Builder()
+       const responseWithStatusCode = new ResponseBuilder()
            .setStatus(statusCode)
            .build();
 
