@@ -1,14 +1,15 @@
-import {UserService} from "./user-service";
+import {UserServiceImpl} from "./user-service-impl";
 import {UserRepository} from "../repository/user-repository";
 import {User} from "../domain/user";
 import {UserAlreadyExistsError, UserNotExistsError} from "../core/error/service/user-error";
+import {UserService} from "./user-service";
 
 describe('UserService', () => {
     let userService: UserService;
     let userRepository: UserRepository = new UserRepository({fs: {}, ext: '', dir: ''});
 
     beforeEach(() => {
-        userService = new UserService({userRepository: userRepository});
+        userService = new UserServiceImpl({userRepository: userRepository});
     });
 
     test('should get user without password returned', async () => {
