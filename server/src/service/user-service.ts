@@ -1,5 +1,5 @@
 /**
- * Concrete implementation of User specific services.
+ * Concrete implementation of User specific operations.
  *
  * @author Caglar Alkis
  */
@@ -11,7 +11,7 @@ import {UserAlreadyExistsError, UserNotExistsError} from "../core/error/service/
 export class UserService {
     private _userRepository: CrudRepository<User, string>;
 
-    constructor({userRepository}: {userRepository: CrudRepository<User, string>}) {
+    constructor({userRepository}: { userRepository: CrudRepository<User, string> }) {
         this._userRepository = userRepository;
     }
 
@@ -45,7 +45,11 @@ export class UserService {
 
     async createUser(user: User) {
         if (!(await this._userRepository.existsById(user.id))) {
-            return await this._userRepository.save(user);
+            try {
+                return await this._userRepository.save(user);
+            } catch (e) {
+                throw e;
+            }
         } else {
             throw new UserAlreadyExistsError(`User ${user.email} already exists!`);
         }
