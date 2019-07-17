@@ -17,7 +17,7 @@ export class Router {
 
     private readonly _routes: Array<Route>;
 
-    constructor({routes}: {routes: Route[]}) {
+    constructor({routes}: { routes: Route[] }) {
         this._routes = routes;
     }
 
@@ -32,7 +32,7 @@ export class Router {
             const route: Route = this.findRoute(req.path);
 
             const {status, payload, headers}: HttpResponse = await route.passToController(req);
-            
+
             switch (headers['content-type']) {
                 case ContentType.MULTIPART_FORM_DATA:
                 case ContentType.TEXT_PLAIN:
@@ -46,18 +46,26 @@ export class Router {
                     break;
             }
         } catch (e) {
+            let httpResponse: HttpResponse;
+
             switch (true) {
-                default:
                 case e instanceof RouterError:
-                    const httpResponse =  new ResponseBuilder()
+                    httpResponse = new ResponseBuilder()
                         .setStatus(StatusCode.NOT_FOUND)
                         .setHeaders({'content-type': ContentType.APPLICATION_JSON})
                         .setPayload({})
                         .build();
-
-                    res.writeHead(httpResponse.status, httpResponse.headers);
-                    res.end(JSON.stringify(httpResponse.payload));
+                    break;
+                default:
+                    httpResponse = new ResponseBuilder()
+                        .setStatus(StatusCode.INTERNAL_SERVER_ERROR)
+                        .setHeaders({'content-type': ContentType.APPLICATION_JSON})
+                        .setPayload({'Error': e.message || 'Bad routing process'})
+                        .build();
+                    break;
             }
+            res.writeHead(httpResponse.status, httpResponse.headers);
+            res.end(JSON.stringify(httpResponse.payload));
         }
     }
 
