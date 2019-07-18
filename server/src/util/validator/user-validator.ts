@@ -25,7 +25,8 @@ export class UserValidator {
     }
 
     static validateUser(user: User) {
-        return this.validateMail(user.email) &&
+        return this.validateMail(user.id) &&
+            this.validateMail(user.email) &&
             this.validatePassword(user.password) &&
             this.validateName(user.name) &&
             this.validateName(user.surname);
