@@ -4,7 +4,7 @@
  * @author Caglar Alkis
  */
 
-import {User} from "../../domain/user";
+import {User} from "../../domain";
 import {BaseValidator} from "./base-validator";
 
 export class UserValidator {

@@ -1,10 +1,8 @@
 import {Controller} from "../core/router";
 import {AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
-import {User} from "../domain/user";
-import {EntityNotExistsError} from "../core/error/repository/repository-error";
-import {BaseError} from "../core/error/base-error";
-import {UserAlreadyExistsError, UserNotExistsError} from "../core/error/service/user-error";
-import {UserService} from "../service/user-service";
+import {User} from "../domain";
+import {BaseError, EntityNotExistsError, UserAlreadyExistsError, UserNotExistsError} from "../core/error";
+import {UserService} from "../service";
 
 export class UserController implements Controller {
     private _userService: UserService;

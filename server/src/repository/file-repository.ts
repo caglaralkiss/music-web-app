@@ -5,7 +5,7 @@ import {
     RepositoryDeleteError,
     RepositoryWriteError,
     EntityNotExistsError,
-} from "../core/error/repository/repository-error";
+} from "../core/error";
 
 export abstract class FileRepository<T extends { id: ID }, ID> implements CrudRepository<T, ID> {
     /**

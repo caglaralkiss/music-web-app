@@ -6,7 +6,7 @@
  */
 
 import {FileRepository} from "./file-repository";
-import {User} from "../domain/user";
+import {User} from "../domain";
 
 export class UserRepository extends FileRepository<User, string> {
 }

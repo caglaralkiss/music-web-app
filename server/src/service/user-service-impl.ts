@@ -4,9 +4,9 @@
  * @author Caglar Alkis
  */
 
-import {CrudRepository} from "../repository/crud-repository";
-import {User} from "../domain/user";
-import {UserAlreadyExistsError, UserNotExistsError} from "../core/error/service/user-error";
+import {CrudRepository} from "../repository";
+import {User} from "../domain";
+import {UserAlreadyExistsError, UserNotExistsError} from "../core/error";
 import {UserService} from "./user-service";
 
 export class UserServiceImpl implements UserService {

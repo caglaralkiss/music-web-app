@@ -1,6 +1,6 @@
 import {Route} from "../core/router";
 import {AppRequest, ContentType, HttpMethod, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
-import {UserController} from "../controller/user-controller";
+import {UserController} from "../controller";
 
 export class UserRoute extends Route {
     constructor({path, controller}: {path: string, controller: UserController}) {
