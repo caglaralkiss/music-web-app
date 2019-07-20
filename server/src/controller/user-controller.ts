@@ -1,5 +1,5 @@
 import {Controller} from "../core/router";
-import {AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
+import {AppRequest, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
 import {User} from "../domain";
 import {BaseError, EntityNotExistsError, UserAlreadyExistsError, UserNotExistsError} from "../core/error";
 import {UserService} from "../service";
@@ -20,7 +20,6 @@ export class UserController implements Controller {
 
             return new ResponseBuilder<Iterable<User> | User>()
                 .setStatus(StatusCode.OK)
-                .setHeaders({'content-type': ContentType.APPLICATION_JSON})
                 .setPayload(payload)
                 .build();
         } catch (e) {
@@ -33,11 +32,7 @@ export class UserController implements Controller {
             const {id} = req.queryStringObj;
             await this._userService.deleteUser(id);
 
-            return new ResponseBuilder<any>()
-                .setPayload({})
-                .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                .setStatus(StatusCode.OK)
-                .build();
+            return new ResponseBuilder<any>().setStatus(StatusCode.OK).build();
         } catch (e) {
             return this._errorHandler(e);
         }
@@ -55,11 +50,7 @@ export class UserController implements Controller {
             };
             await this._userService.createUser(user);
 
-            return new ResponseBuilder()
-                .setStatus(StatusCode.OK)
-                .setPayload({})
-                .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                .build();
+            return new ResponseBuilder().setStatus(StatusCode.OK).build();
         } catch (e) {
             return this._errorHandler(e);
         }
@@ -81,11 +72,7 @@ export class UserController implements Controller {
 
             await this._userService.updateUser(modifiedUser);
 
-            return new ResponseBuilder()
-                .setStatus(StatusCode.OK)
-                .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                .setPayload({})
-                .build();
+            return new ResponseBuilder().setStatus(StatusCode.OK).build();
         } catch (e) {
             return this._errorHandler(e);
         }
@@ -95,27 +82,13 @@ export class UserController implements Controller {
         console.log(e);
         switch (true) {
             case e instanceof EntityNotExistsError:
-                return new ResponseBuilder()
-                    .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                    .setStatus(StatusCode.NOT_FOUND)
-                    .setPayload(e.getJson())
-                    .build();
+                return new ResponseBuilder().setStatus(StatusCode.NOT_FOUND).setPayload(e.getJson()).build();
             case e instanceof UserAlreadyExistsError:
-                return new ResponseBuilder()
-                    .setStatus(StatusCode.BAD_REQUEST)
-                    .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                    .setPayload(e.getJson())
-                    .build();
+                return new ResponseBuilder().setStatus(StatusCode.BAD_REQUEST).setPayload(e.getJson()).build();
             case e instanceof UserNotExistsError:
-                return new ResponseBuilder()
-                    .setStatus(StatusCode.BAD_REQUEST)
-                    .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                    .setPayload(e.getJson())
-                    .build();
+                return new ResponseBuilder().setStatus(StatusCode.BAD_REQUEST).setPayload(e.getJson()).build();
             default:
-                return new ResponseBuilder<any>()
-                    .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                    .setStatus(StatusCode.INTERNAL_SERVER_ERROR)
+                return new ResponseBuilder<any>().setStatus(StatusCode.INTERNAL_SERVER_ERROR)
                     .setPayload((new BaseError('Undefined error occurred').getJson()))
                     .build();
         }

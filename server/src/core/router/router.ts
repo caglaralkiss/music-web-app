@@ -31,7 +31,7 @@ export class Router {
         try {
             const route: Route = this.findRoute(req.path);
 
-            const {status, payload, headers}: HttpResponse = await route.passToController(req);
+            const {status, payload, headers}: HttpResponse = await route.passToController(req, res);
 
             switch (headers['content-type']) {
                 case ContentType.MULTIPART_FORM_DATA:
