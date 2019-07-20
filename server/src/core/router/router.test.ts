@@ -3,6 +3,7 @@ import {IncomingMessage, ServerResponse} from 'http';
 import {AppRequest, ContentType, HttpResponse, StatusCode} from "../http";
 import {Controller} from "./controller";
 import {Router} from "./router";
+import {Filter} from "../filter";
 
 describe('Router', () => {
     let router: Router;
@@ -29,8 +30,8 @@ describe('Router', () => {
     ];
 
     class MockRoute extends Route {
-        constructor({path, controller}: {path: string, controller: Controller}) {
-            super({path, controller});
+        constructor({path, controller, filters}: {path: string, controller: Controller, filters: Array<Filter>}) {
+            super({path, controller, filters});
         }
 
         async passToController(req: AppRequest): Promise<HttpResponse> {
@@ -49,9 +50,9 @@ describe('Router', () => {
 
     beforeEach(() => {
         mockRoutes = [
-            new MockRoute({path: mockPaths[0], controller: {} as Controller}),
-            new MockRoute({path: mockPaths[1], controller: {} as Controller}),
-            new MockRoute({path: mockPaths[2], controller: {} as Controller})
+            new MockRoute({path: mockPaths[0], controller: {} as Controller, filters: []}),
+            new MockRoute({path: mockPaths[1], controller: {} as Controller, filters: []}),
+            new MockRoute({path: mockPaths[2], controller: {} as Controller, filters: []})
         ];
 
         router = new Router({routes: mockRoutes});
