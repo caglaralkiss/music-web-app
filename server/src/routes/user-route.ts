@@ -1,11 +1,10 @@
-import {Route} from "../core/router";
+import {Controller, Route} from "../core/router";
 import {AppRequest, ContentType, HttpMethod, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
-import {UserController} from "../controller";
 import {Filter} from "../core/filter";
 import {ServerResponse} from "http";
 
 export class UserRoute extends Route {
-    constructor({path, controller, filters}: {path: string, controller: UserController, filters: Array<Filter>}) {
+    constructor({path, controller, filters}: {path: string, controller: Controller, filters: Array<Filter>}) {
         super({path, controller, filters});
     }
 
