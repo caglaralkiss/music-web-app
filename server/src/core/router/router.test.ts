@@ -95,6 +95,6 @@ describe('Router', () => {
 
         await router.passRequestToRoute(mockAppReq, mockRes);
         expect(mockRes.writeHead).toHaveBeenCalledWith(StatusCode.NOT_FOUND, mockAppReq.headers);
-        expect(mockRes.end).toHaveBeenCalledWith(JSON.stringify({}));
+        expect(mockRes.end).toHaveBeenCalledWith(JSON.stringify({'Error': 'Non-existent API endpoint'}));
     })
 });
