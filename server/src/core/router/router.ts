@@ -7,7 +7,7 @@
 import {AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode} from "../http";
 import {ServerResponse} from "http";
 import {Route} from "./route";
-import {RouterError} from "../error/router/router-error";
+import {BaseError, RouterError} from "../error";
 
 export class Router {
     /* Assigned routes */
@@ -53,7 +53,7 @@ export class Router {
                     httpResponse = new ResponseBuilder()
                         .setStatus(StatusCode.NOT_FOUND)
                         .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                        .setPayload({})
+                        .setPayload(new BaseError('Non-existent API endpoint').getJson())
                         .build();
                     break;
                 default:
