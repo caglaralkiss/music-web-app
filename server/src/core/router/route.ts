@@ -8,8 +8,12 @@ export abstract class Route {
         return this._path;
     }
 
+    get filterManager(): FilterManager {
+        return this._filterManager;
+    }
+
     protected readonly _path: string;
-    protected readonly filterManager: FilterManager;
+    protected readonly _filterManager: FilterManager;
     protected _controller: Controller;
 
     /**
@@ -20,9 +24,9 @@ export abstract class Route {
     protected constructor({path, controller, filters}: {path: string, controller: Controller, filters: Array<Filter>}) {
         this._path = path;
         this._controller = controller;
-        this.filterManager = new FilterManager(new Target());
+        this._filterManager = new FilterManager(new Target());
 
-        filters.forEach((filter) => this.filterManager.setFilter(filter));
+        filters.forEach((filter) => this._filterManager.setFilter(filter));
     }
 
     /**
