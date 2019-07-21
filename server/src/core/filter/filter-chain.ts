@@ -16,12 +16,12 @@ export class FilterChain {
         this.filters.push(filter);
     }
 
-    execute(req: AppRequest, res: ServerResponse) {
-        this.filters.forEach((filter) => {
-            filter.execute(req, res);
-        });
+    async execute(req: AppRequest, res: ServerResponse) {
+        for (const filter of this.filters) {
+            await filter.execute(req,res)
+        }
 
-        this.target.execute(req, res);
+        await this.target.execute(req, res);
     }
 
     setTarget(target: Target) {

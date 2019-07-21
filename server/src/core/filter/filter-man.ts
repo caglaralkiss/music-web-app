@@ -22,7 +22,7 @@ export class FilterManager {
         this.filterChain.addFilter(filter);
     }
 
-    doFilter(req: AppRequest, res: ServerResponse) {
-        this.filterChain.execute(req, res);
+    async doFilter(req: AppRequest, res: ServerResponse): Promise<void> {
+        await this.filterChain.execute(req, res);
     }
 }
