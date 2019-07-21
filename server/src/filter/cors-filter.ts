@@ -9,7 +9,7 @@ import {AppRequest, HttpMethod} from "../core/http";
 import {ServerResponse} from "http";
 
 export class CorsFilter implements Filter {
-    execute(req: AppRequest, res: ServerResponse): void {
+    async execute(req: AppRequest, res: ServerResponse): Promise<void> {
         const headers = {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Request-Method': '*',

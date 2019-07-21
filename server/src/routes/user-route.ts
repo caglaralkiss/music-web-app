@@ -13,7 +13,7 @@ export class UserRoute extends Route {
 
         let finalResponse: HttpResponse;
 
-        this.filterManager.doFilter(req, res);
+        await this.filterManager.doFilter(req, res);
 
         switch (method) {
             case HttpMethod.GET:

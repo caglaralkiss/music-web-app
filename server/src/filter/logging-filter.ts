@@ -3,7 +3,7 @@ import {AppRequest} from "../core/http";
 import {ServerResponse} from "http";
 
 export class LoggingFilter implements Filter {
-    execute(req: AppRequest, res: ServerResponse): void {
+    async execute(req: AppRequest, res: ServerResponse): Promise<void> {
         let oldWrite = res.write,
             oldEnd = res.end;
 
