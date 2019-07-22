@@ -27,12 +27,14 @@ export class UserController implements Controller {
         }
     }
 
-    async delete(req: AppRequest): Promise<HttpResponse<void>> {
+    async delete(req: AppRequest): Promise<HttpResponse<any>> {
         try {
             const {id} = req.queryStringObj;
+            this._checkAuthority(req, id);
+
             await this._userService.deleteUser(id);
 
-            return new ResponseBuilder<any>().setStatus(StatusCode.OK).build();
+            return new ResponseBuilder().setStatus(StatusCode.OK).build();
         } catch (e) {
             return this._errorHandler(e);
         }
@@ -60,6 +62,8 @@ export class UserController implements Controller {
         try {
             // @TODO add hashing logic in here
             const {name, surname, password, email} = req.body;
+            this._checkAuthority(req, email);
+
             const existedUser = await this._userService.getUser(email);
 
             const modifiedUser = {
@@ -91,6 +95,15 @@ export class UserController implements Controller {
                 return new ResponseBuilder<any>().setStatus(StatusCode.INTERNAL_SERVER_ERROR)
                     .setPayload((new BaseError('Undefined error occurred').getJson()))
                     .build();
+        }
+    }
+
+    private _checkAuthority(req: AppRequest, id: string) {
+        if (req.id !== id) {
+            return new ResponseBuilder()
+                .setStatus(StatusCode.FORBIDDEN)
+                .setPayload(new BaseError('You are not authorized to delete this user').getJson())
+                .build();
         }
     }
 }
