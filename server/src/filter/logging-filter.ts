@@ -4,6 +4,8 @@ import {ServerResponse} from "http";
 
 export class LoggingFilter implements Filter {
     async execute(req: AppRequest, res: ServerResponse): Promise<void> {
+        // @TODO implement better solution to logging
+        /*
         let oldWrite = res.write,
             oldEnd = res.end;
 
@@ -25,5 +27,6 @@ export class LoggingFilter implements Filter {
 
             oldEnd.apply(res, arguments);
         };
+        */
     }
 }
