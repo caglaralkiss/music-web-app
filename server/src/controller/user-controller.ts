@@ -3,6 +3,7 @@ import {AppRequest, HttpResponse, ResponseBuilder, StatusCode} from "../core/htt
 import {User} from "../domain";
 import {BaseError, EntityNotExistsError, UserAlreadyExistsError, UserNotExistsError} from "../core/error";
 import {UserService} from "../service";
+import {Crypto} from '../util/security/crypto';
 
 export class UserController implements Controller {
     private _userService: UserService;
@@ -43,12 +44,15 @@ export class UserController implements Controller {
     async post(req: AppRequest): Promise<HttpResponse<any>> {
         try {
             const {name, surname, password, email} = req.body;
+
+            const hashedPassword = Crypto.hash(password);
+
             const user: User = {
                 id: email,
                 email,
                 name,
                 surname,
-                password
+                password: hashedPassword
             };
             await this._userService.createUser(user);
 
@@ -65,12 +69,16 @@ export class UserController implements Controller {
             this._checkAuthority(req, email);
 
             const existedUser = await this._userService.getUser(email);
+            let hashedPass: string;
+            if (password) {
+                hashedPass = Crypto.hash(password);
+            }
 
             const modifiedUser = {
                 id: existedUser.id,
                 name: name ? name : existedUser.name,
                 surname: surname ? surname : existedUser.surname,
-                password: password ? password : existedUser.password,
+                password: password ? hashedPass : existedUser.password,
                 email: existedUser.email
             };
 

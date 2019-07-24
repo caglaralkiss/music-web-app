@@ -4,6 +4,8 @@ import {BaseError, EntityNotExistsError} from "../core/error";
 import {CrudRepository} from "../repository";
 import {User} from "../domain";
 import {sign} from "jsonwebtoken";
+import {Crypto} from "../util/security/crypto";
+import {Config} from "../config/config";
 
 export class AuthController implements Controller {
 
@@ -16,13 +18,14 @@ export class AuthController implements Controller {
     async post(req: AppRequest): Promise<HttpResponse> {
         try {
             const {email, password} = req.body;
-            // @TODO hash password in here
+
+            const hashedPass = Crypto.hash(password);
 
             const user: User = await this._userRepository.findById(email);
 
-            if (user.password === password) {
-                // @TODO get secret from Config class.
-                const token = sign({id: user.email}, 'secret');
+            if (user.password === hashedPass) {
+                const {secret} = Config.getInstance();
+                const token = sign({id: user.email}, secret);
 
                 return new ResponseBuilder().setStatus(StatusCode.OK).setPayload({token}).build();
             } else {
