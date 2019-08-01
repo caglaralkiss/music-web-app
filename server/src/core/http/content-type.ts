@@ -9,4 +9,5 @@ export enum ContentType {
     APPLICATION_JSON = 'application/json',
     TEXT_PLAIN = 'text/plain',
     AUDIO_MPEG = 'audio/mpeg',
+    IMAGE_JPEG = 'image/jpeg'
 }
