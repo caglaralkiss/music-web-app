@@ -26,6 +26,6 @@ export default {
     writeFile: util.promisify(writeFile),
     unlink: util.promisify(unlink),
     stat: util.promisify(stat),
-    createReadStream: util.promisify(createReadStream),
+    createReadStream: createReadStream,
     access: util.promisify(access)
 }
