@@ -15,6 +15,7 @@ export interface ConfigParams {
     secret: string
     db?: string,
     hashSalt?: string,
+    url?: string
 }
 
 export class Config {
@@ -53,6 +54,10 @@ export class Config {
         return this.configParams.secret ? this.configParams.secret : 'its*def*secret';
     }
 
+    get url(): string {
+        return this.configParams.url;
+    }
+
     private _loadConfig(envType: string): void {
         switch (envType) {
             case Environment.DEVELOPMENT:
@@ -61,7 +66,8 @@ export class Config {
                     port: 3000,
                     db: path.resolve('.') + '/.data/',
                     hashSalt: 'salt*my*tequila*123',
-                    secret: 'i*am*secret'
+                    secret: 'i*am*secret',
+                    url: 'http://localhost:3000',
                 };
                 break;
             case Environment.PRODUCTION:
@@ -70,7 +76,8 @@ export class Config {
                     port: 4000,
                     db: path.resolve('.') + '/.data/',
                     hashSalt: process.env.HASH_SALT,
-                    secret: process.env.SECRET
+                    secret: process.env.SECRET,
+                    url: process.env.URL,
                 };
                 break;
             default:
@@ -79,7 +86,8 @@ export class Config {
                     port: 3000,
                     db: path.resolve('.') + '/.data/',
                     hashSalt: 'salt*my*tequila*123',
-                    secret: 'i*am*secret'
+                    secret: 'i*am*secret',
+                    url: 'http://localhost:3000'
                 };
                 break;
         }

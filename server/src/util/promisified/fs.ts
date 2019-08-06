@@ -12,7 +12,7 @@ import {
     readFile,
     ftruncate,
     readdir,
-    access
+    access, createWriteStream
 } from "fs";
 
 import * as util from "util";
@@ -27,5 +27,6 @@ export default {
     unlink: util.promisify(unlink),
     stat: util.promisify(stat),
     createReadStream: createReadStream,
+    createWriteStream: createWriteStream,
     access: util.promisify(access)
 }
