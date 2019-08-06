@@ -22,7 +22,7 @@ export class Router {
     }
 
     /**
-     * Pass req(i.e @Link {AppRequest}) and res objects to the defined route to process request&response
+     * Pass req(i.e {@Link AppRequest}) and res objects to the defined route to process request&response
      *
      * @param req
      * @param res
@@ -34,6 +34,10 @@ export class Router {
             const {status, payload, headers}: HttpResponse = await route.passToController(req, res);
 
             switch (headers['content-type']) {
+                case ContentType.IMAGE_JPEG:
+                    res.writeHead(status, headers);
+                    payload.pipe(res);
+                    break;
                 case ContentType.MULTIPART_FORM_DATA:
                 case ContentType.TEXT_PLAIN:
                 default:
@@ -42,7 +46,8 @@ export class Router {
                     res.end(JSON.stringify(payload));
                     break;
                 case ContentType.AUDIO_MPEG:
-                    // @TODO Audio fetching logic will be here.
+                    res.writeHead(status, headers);
+                    payload.pipe(res);
                     break;
             }
         } catch (e) {
