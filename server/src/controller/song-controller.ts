@@ -5,7 +5,7 @@ import {BaseError, EntityNotExistsError} from "../core/error";
 import {Config} from "../config/config";
 import {ApiEndpoint} from "../config/api-endpoint";
 import {Crypto} from "../util/security/crypto";
-import {SongService} from "../service/song-service";
+import {SongService} from "../service";
 import {SongAlreadyExistsError, SongNotExistsError} from "../core/error/service/song-error";
 
 export class SongController implements Controller {
