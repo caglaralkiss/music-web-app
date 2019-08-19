@@ -1,5 +1,5 @@
 import {Controller, Route} from "../core/router";
-import {AppRequest, ContentType, HttpMethod, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
+import {AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
 import {Filter} from "../core/filter";
 import {ServerResponse} from "http";
 
@@ -9,32 +9,16 @@ export class UserRoute extends Route {
     }
 
     async passToController(req: AppRequest, res: ServerResponse): Promise<HttpResponse<any>> {
-        const {method} = req;
-
-        let finalResponse: HttpResponse;
-
         await this.filterManager.doFilter(req, res);
 
-        switch (method) {
-            case HttpMethod.GET:
-                finalResponse = await this._controller.get(req);
-                break;
-            case HttpMethod.DELETE:
-                finalResponse = await this._controller.delete(req);
-                break;
-            case HttpMethod.PUT:
-                finalResponse = await this._controller.put(req);
-                break;
-            case HttpMethod.POST:
-                finalResponse = await this._controller.post(req);
-                break;
-            default:
-                finalResponse = new ResponseBuilder()
-                    .setStatus(StatusCode.METHOD_NOT_ALLOWED)
-                    .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                    .setPayload({})
-                    .build();
-                break;
+        let finalResponse: HttpResponse = await this._controller[req.method](req);
+
+        if (finalResponse) {
+            finalResponse = new ResponseBuilder()
+                .setStatus(StatusCode.METHOD_NOT_ALLOWED)
+                .setHeaders({'content-type': ContentType.APPLICATION_JSON})
+                .setPayload({})
+                .build();
         }
 
         return {
