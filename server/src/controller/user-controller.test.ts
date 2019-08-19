@@ -1,8 +1,9 @@
-import {UserService} from "../service/user-service";
-import {User} from "../domain/user";
+import {UserService} from "../service";
+import {User} from "../domain";
 import {UserController} from "./user-controller";
 import {AppRequest} from "../core/http";
-import {UserAlreadyExistsError, UserNotExistsError} from "../core/error/service/user-error";
+import {UserAlreadyExistsError, UserNotExistsError} from "../core/error";
+import {Crypto} from "../util/security/crypto";
 
 describe('UserController', () => {
     const mockAppRequestFactory: (partialReq: Partial<AppRequest>) => AppRequest = (partialReq) => {
@@ -39,6 +40,10 @@ describe('UserController', () => {
 
     let userService: UserService = new MockUserService();
     let userController: UserController = new UserController({userService});
+
+    beforeEach(() => {
+        spyOn(Crypto, 'hash').and.returnValue(undefined);
+    });
 
     afterEach(() => {
         jest.resetAllMocks();
