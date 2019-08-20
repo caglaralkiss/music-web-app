@@ -51,6 +51,6 @@ export class BaseValidator {
      * @returns {*} boolean
      */
     static pattern(value: string, regex: RegExp) {
-        return regex.test(value.trim());
+        return regex.test(value);
     }
 }

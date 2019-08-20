@@ -64,7 +64,6 @@ export class UserController implements Controller {
 
     async put(req: AppRequest): Promise<HttpResponse<any>> {
         try {
-            // @TODO add hashing logic in here
             const {name, surname, password, email} = req.body;
             this._checkAuthority(req, email);
 
@@ -110,7 +109,7 @@ export class UserController implements Controller {
         if (req.id !== id) {
             return new ResponseBuilder()
                 .setStatus(StatusCode.FORBIDDEN)
-                .setPayload(new BaseError('You are not authorized to delete this user').getJson())
+                .setPayload(new BaseError('You are not authorized to modify this user').getJson())
                 .build();
         }
     }
