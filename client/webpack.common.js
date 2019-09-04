@@ -14,7 +14,9 @@ const commonConfig = {
 	},
 	output : {
 		path: path.resolve(__dirname, 'dist'),
-		filename: '[name].bundle.js',
+		chunkFilename: '[name].[hash].bundle.js',
+		filename: '[name].[hash].bundle.js',
+		publicPath: '/'
 	},
 	resolve: {
 		extensions: ['.ts', '.js']
@@ -26,6 +28,11 @@ const commonConfig = {
 				loader: 'awesome-typescript-loader',
 			}
 		]
+	},
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		}
 	},
 	plugins: [
 		new CleanWebpackPlugin(),

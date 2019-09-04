@@ -12,7 +12,8 @@ const devConfig = merge(common, {
 	devServer: {
 		contentBase: './dist',
 		host: 'localhost',
-		hot: true
+		hot: true,
+		historyApiFallback: true,
 	},
 	module: {
 		rules: [
