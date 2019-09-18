@@ -17,7 +17,7 @@
   "author": "Caglar Alkis",
   "license": "ISC",
   "dependencies": {
-    "rxjs": "^6.5.2",
+    "axios": "^0.19.0",
     "typescript": "^3.5.2"
   },
   "devDependencies": {
