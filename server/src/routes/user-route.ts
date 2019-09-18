@@ -13,7 +13,7 @@ export class UserRoute extends Route {
 
         let finalResponse: HttpResponse = await this._controller[req.method](req);
 
-        if (finalResponse) {
+        if (!finalResponse) {
             finalResponse = new ResponseBuilder()
                 .setStatus(StatusCode.METHOD_NOT_ALLOWED)
                 .setHeaders({'content-type': ContentType.APPLICATION_JSON})
