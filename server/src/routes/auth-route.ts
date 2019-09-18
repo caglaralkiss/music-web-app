@@ -16,15 +16,13 @@ export class AuthRoute extends Route {
 
         await this.filterManager.doFilter(req, res);
 
-        switch (method) {
-            case HttpMethod.POST:
-                finalResponse = await this._controller.post(req);
-                break;
-            default:
-                return new ResponseBuilder()
-                    .setStatus(StatusCode.METHOD_NOT_ALLOWED)
-                    .setHeaders({'content-type': ContentType.APPLICATION_JSON})
-                    .build()
+        if (method === HttpMethod.POST) {
+            finalResponse = await this._controller.post(req);
+        } else {
+            return new ResponseBuilder()
+                .setStatus(StatusCode.METHOD_NOT_ALLOWED)
+                .setHeaders({'content-type': ContentType.APPLICATION_JSON})
+                .build()
         }
 
         return {
