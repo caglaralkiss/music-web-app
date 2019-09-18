@@ -6,23 +6,25 @@
 
 import {createServer, IncomingMessage, Server, ServerResponse} from "http";
 import {Config} from "../config/config";
-import {BodyParser} from "../core/http/parser";
-import {ContentType} from "../core/http/content-type";
-import {getParser} from "./helpers";
+import {AppRequest, ContentType, HttpMethod, StatusCode} from "../core/http";
+import {parseBody} from "./helpers";
+import * as URL from 'url';
+import {Route, Router} from "../core/router";
+import RoutesRoot from "../routes/routes-root";
 
 function httpServer(): Server {
-    let bodyParser: BodyParser;
-    let contentType: ContentType;
+    let router: Router = createRouter();
 
     return createServer(async (req: IncomingMessage, res: ServerResponse) => {
         try {
-            contentType = req.headers['content-type'] as ContentType;
-            bodyParser = getParser(contentType);
+            const body = await parseBody(req);
+            const appReq: AppRequest = buildAppRequest(req, body);
 
-            console.log(await bodyParser.performParse(req))
+            await router.passRequestToRoute(appReq, res);
         } catch (e) {
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(e.getJson()));
+            res.setHeader('content-type', ContentType.TEXT_PLAIN);
+            res.statusCode = StatusCode.INTERNAL_SERVER_ERROR;
+            res.end(e.message, 'utf-8');
         }
     })
 }
@@ -35,7 +37,33 @@ function init() {
     })
 }
 
+function buildAppRequest(req: IncomingMessage, body: Body): AppRequest {
+    const {method, url, headers} = req;
+
+    const parsedUrl = URL.parse(url, true);
+    const path = parsedUrl.pathname;
+    const trimmedPath = path.replace(/^\/+|\/+$/g, '');
+    const queryStringObj = parsedUrl.query;
+
+    return {
+        path: trimmedPath,
+        method: method.toLowerCase() as HttpMethod,
+        headers,
+        queryStringObj,
+        body
+    }
+}
+
+function createRouter(): Router {
+    let routes: Array<Route> = [];
+
+    for (let [routeName, routeObj] of Object.entries(RoutesRoot)) {
+        routes.push(routeObj);
+    }
+
+    return new Router({routes});
+}
+
 export default {
-    httpServer,
     init
 }
