@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "target": "es6",
     "noImplicitAny": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
