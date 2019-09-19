@@ -15,23 +15,6 @@ const devConfig = merge(common, {
 		hot: true,
 		historyApiFallback: true,
 	},
-	module: {
-		rules: [
-			{
-				test: /\.(sa|sc|c)ss$/,
-				use: [
-					'style-loader',
-					{
-						loader: 'css-loader',
-						options: {
-							sourceMap: true,
-						}
-					},
-					'sass-loader'
-				]
-			}
-		]
-	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin()
 	]

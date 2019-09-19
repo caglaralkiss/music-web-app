@@ -10,7 +10,6 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const commonConfig = {
 	entry: {
 		bundle: './src/index.ts',
-		style: './src/style.scss'
 	},
 	output : {
 		path: path.resolve(__dirname, 'dist'),
@@ -37,7 +36,7 @@ const commonConfig = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new CheckerPlugin(),
-		new HtmlWebpackPlugin({template: './src/index.html'}),
+		new HtmlWebpackPlugin({template: './index.html'})
 	]
 };
 
