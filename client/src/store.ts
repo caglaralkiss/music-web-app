@@ -8,7 +8,7 @@ import { applyMiddleware, combineReducers, compose as originalCompose, createSto
 import thunk from 'redux-thunk';
 import { lazyReducerEnhancer, LazyStore } from 'pwa-helpers/lazy-reducer-enhancer';
 import logger from 'redux-logger';
-import { rootReducer } from './reducers/root-reducer';
+import { app } from './reducers/app';
 
 const compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || originalCompose;
 
@@ -18,6 +18,6 @@ export const store: Store & LazyStore = createStore(
 );
 
 store.addReducers({
-   rootReducer,
+   app,
 });
 

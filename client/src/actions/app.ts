@@ -13,24 +13,31 @@ export function navigate(path: string) {
 function loadPage(page: string) {
     return async (dispatch: Dispatch) => {
         switch (page) {
-            case 'home':
+            case 'songs':
                 await import(
-                    /* webpackChunkName: 'home' */
+                    /* webpackChunkName: 'songs' */
                     /* webpackMode: 'lazy' */
-                    '../components/home');
+                    '../components/songs-page');
                 break;
             case 'login':
                 await import(
                     /* webpackChunkName: 'login' */
                     /* webpackMode: 'lazy' */
-                    '../components/login');
+                    '../components/login-page');
+                break;
+            case 'search':
+                await import(
+                    /* webpackChunkName: 'search' */
+                    /* webpackMode: 'lazy' */
+                    '../components/search-page');
                 break;
             default:
-                await import(
-                    /* webpackChunkName: 'notFound' */
-                    /* webpackMode: 'lazy' */
-                    '../components/not-found');
+                page = 'not-found';
                 break;
+        }
+
+        if (page === 'not-found') {
+            import('../components/not-found-page');
         }
 
         dispatch(updatePage(page));

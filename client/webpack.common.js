@@ -9,7 +9,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const commonConfig = {
 	entry: {
-		bundle: './src/index.ts',
+		bundle: './src/components/app.ts',
 	},
 	output : {
 		path: path.resolve(__dirname, 'dist'),
