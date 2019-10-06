@@ -17,19 +17,19 @@ function loadPage(page: string) {
                 await import(
                     /* webpackChunkName: 'songs' */
                     /* webpackMode: 'lazy' */
-                    '../components/songs-page');
+                    '../../components/songs-page');
                 break;
             case 'login':
                 await import(
                     /* webpackChunkName: 'login' */
                     /* webpackMode: 'lazy' */
-                    '../components/login-page');
+                    '../../components/login-page');
                 break;
             case 'search':
                 await import(
                     /* webpackChunkName: 'search' */
                     /* webpackMode: 'lazy' */
-                    '../components/search-page');
+                    '../../components/search-page');
                 break;
             default:
                 page = 'not-found';
@@ -37,7 +37,7 @@ function loadPage(page: string) {
         }
 
         if (page === 'not-found') {
-            import('../components/not-found-page');
+            import('../../components/not-found-page');
         }
 
         dispatch(updatePage(page));
