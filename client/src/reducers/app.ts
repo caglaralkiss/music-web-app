@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { UPDATE_PAGE } from '../actions/types';
+import { UPDATE_PAGE } from '../actions/app/types';
 
 export function app(state: { page: string } = { page: 'not-found' }, action: AnyAction) {
     switch (action.type) {

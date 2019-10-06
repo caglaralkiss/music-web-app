@@ -2,7 +2,7 @@ import { customElement, html, LitElement, property } from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin';
 import { store } from '../store';
 import { installRouter } from 'pwa-helpers/router';
-import { navigate } from '../actions/app';
+import { navigate } from '../actions/app/app';
 
 @customElement('app-music')
 export class App extends connect(store)(LitElement) {
