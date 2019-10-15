@@ -7,7 +7,7 @@ import ControllerRoot from "../controller/controller-root";
 import RepositoryRoot from "../repository/repository-root";
 
 const authRoute = new AuthRoute({
-    path: 'users/auth',
+    path: ApiEndpoint.AUTH,
     controller: ControllerRoot.AuthController,
     filters: [
         new LoggingFilter(),
@@ -24,14 +24,14 @@ const songRoute = new SongRoute({
 });
 
 const userRoute = new UserRoute({
-    path: 'users',
+    path: ApiEndpoint.USER,
     controller: ControllerRoot.UserController,
     filters: [new CorsFilter(), new AuthFilter({userRepository: RepositoryRoot.UserRepository}), new LoggingFilter()]
 });
 
-const imgRoute = new ImageRoute({path: 'image', controller: {} as Controller, filters: [new CorsFilter()], fs});
+const imgRoute = new ImageRoute({path: ApiEndpoint.IMAGE, controller: {} as Controller, filters: [new CorsFilter()], fs});
 const pingRoute = new PingRoute({path: 'ping', controller: {} as Controller, filters: []});
-const audioRoute = new AudioRoute({path: 'audio', controller: {} as Controller, filters: [new CorsFilter()], fs});
+const audioRoute = new AudioRoute({path: ApiEndpoint.AUDIO, controller: {} as Controller, filters: [new CorsFilter()], fs});
 
 export default {
     UserRoute: userRoute,
