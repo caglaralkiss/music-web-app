@@ -94,7 +94,7 @@ export class SongController implements Controller {
                     this._readToWriteStream(cover.path, `${this.BASE_DIR}${ApiEndpoint.IMAGE}/${id}.jpeg`);
                 }
                 if (audio) {
-                    this._readToWriteStream(cover.path, `${this.BASE_DIR}${ApiEndpoint.IMAGE}/${id}.jpeg`)
+                    this._readToWriteStream(cover.path, `${this.BASE_DIR}${ApiEndpoint.AUDIO}/${id}.mp3`)
                 }
 
                 const newSong: Song = {
