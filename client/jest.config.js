@@ -1,8 +1,3 @@
 module.exports = {
-	"roots": [
-		"./src"
-	],
-	"transform": {
-		"^.+\\.tsx?$": "ts-jest"
-	},
-};
+  preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel'
+}
