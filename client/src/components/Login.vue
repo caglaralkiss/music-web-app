@@ -3,7 +3,7 @@
     .login__form
       form.form(@submit.prevent)
         .u-margin-bottom-medium
-          h2 Login
+          h2.u-center-text Login
         .form__group
           input.form__input(
             type="text"
@@ -47,7 +47,17 @@ export default class Login extends Vue {
     align-items center
     justify-content center
     height inherit
-    width inherit;
+    width inherit
+
+    h2
+      font-size: 3.5rem
+      font-weight 700
+      background-image linear-gradient(to right, $color-primary-light, $color-primary-dark)
+      -webkit-background-clip text
+      color transparent
+      animation-name slideFromUp
+      animation-duration 1s
+      animation-timing-function ease-out
 
     &__form
       width: 30vw;

@@ -23,6 +23,11 @@ export default class Auth extends Vue {
 <style lang="stylus" scoped>
   $title-font-size = 4rem
 
+  fadeInAnimation =
+      animation-name fadeIn
+      animation-duration 3s
+      animation-timing-function ease-out
+
   .auth
     height 100vh
 
@@ -33,15 +38,13 @@ export default class Auth extends Vue {
       flex-direction row
       justify-content center
       border-bottom 1px solid rgba($color-black, .1)
-
-      animation-name fadeIn
-      animation-duration 1s
-      animation-timing-function ease-out
+      background-color $color-secondary-dark
 
       &__logo
         display flex
         flex-direction column
         justify-content center
+        {fadeInAnimation}
 
       img
           height $title-font-size + 3rem
@@ -50,10 +53,12 @@ export default class Auth extends Vue {
         display flex
         flex-direction column
         justify-content center
+        {fadeInAnimation}
 
         h1
           font-size $title-font-size
           font-weight 900
+          color $color-primary
 
     &__body
       height 85vh
