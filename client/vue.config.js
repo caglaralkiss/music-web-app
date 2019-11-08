@@ -11,9 +11,15 @@ module.exports = {
     'style-resources-loader': {
       preProcessor: 'stylus',
       patterns: [
-        path.resolve(__dirname, stylePaths.variables),
-        path.resolve(__dirname, stylePaths.mixins)
+        'D:\\projects\\music-web-app\\client\\src\\styles\\styl\\abstract\\variables.styl',
+        'D:\\projects\\music-web-app\\client\\src\\styles\\styl\\abstract\\mixins.styl'
       ]
+    },
+    i18n: {
+      locale: 'en',
+      fallbackLocale: 'tr',
+      localeDir: 'locales',
+      enableInSFC: false
     }
   }
 }
