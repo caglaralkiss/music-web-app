@@ -1,3 +1,16 @@
 {
-  "message": "hello i18n !!"
+  "auth": {
+    "login": "Üye Girisi",
+    "register": "Kay",
+    "email": "Eposta",
+    "password": "Sifre",
+    "submit": "Onayla",
+    "errors": {
+      "label": "Lütfen aşağıdaki hataları düzeltin: ",
+      "emailRequired": "Email gereklidir",
+      "passwordRequired": "Şifre gereklidir",
+      "invalidEmail": "Eposta, eposta formatında olmalıdır",
+      "invalidPassword": "Şifre maximum 8 karaterden oluşup bir büyük, bir küçük ve bir sayı içermelidir"
+    }
+  }
 }
