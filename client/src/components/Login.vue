@@ -25,7 +25,7 @@
             placeholder="Password"
             required)
           label.form__label(for="password") {{ $t('auth.password') }}
-        .form__group
+        .form__group.u-center-text
           button.btn.btn--green(@click="submit") {{ $t('auth.submit') }}
 </template>
 
