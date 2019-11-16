@@ -1,6 +1,6 @@
 import { Api } from './axios'
 import { Endpoint } from '@/config'
-import { UserSubmit } from '@/interfaces'
+import { LoginSubmit, RegisterSubmit } from '@/interfaces'
 import { AxiosResponse } from 'axios'
 
 export const TOKEN_KEY = 'T0K3N'
@@ -15,9 +15,17 @@ export function clearToken() {
   delete Api.defaults.headers.common['Authorization']
 }
 
-export function login(user: UserSubmit): Promise<AxiosResponse<{ token: string }>> {
+export function login(user: LoginSubmit): Promise<AxiosResponse<{ token: string }>> {
   return Api.request({
     url: Endpoint.AUTH,
+    method: 'post',
+    data: user
+  })
+}
+
+export function register(user: RegisterSubmit): Promise<AxiosResponse<void>> {
+  return Api.request({
+    url: Endpoint.USER,
     method: 'post',
     data: user
   })
