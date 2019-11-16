@@ -1,36 +1,43 @@
 <template lang="pug">
   .login
-      form.login__form(@submit.prevent autocomplete="off" novalidate)
-        h2.u-margin-bottom-small.u-center-text {{ $t('auth.login') }}
-        .login__errors(v-if="errorKeys.length > 0")
-          .login__errors__label {{ $t('auth.errors.label') }}
-          ul.login__errors__list
-            li.login__errors__error(v-for="errorKey in errorKeys") {{ $t(errorKey) }}
-          .u-margin-bottom-small
-        .form__group
-          input.form__input(
-            type="email"
-            id="email"
-            maxlength="30"
-            v-model="email"
-            placeholder="Email"
-            required)
-          label.form__label(for="email") {{ $t('auth.email') }}
-        .form__group
-          input.form__input(
-            type="text"
-            id="password"
-            pattern="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$"
-            v-model="password"
-            placeholder="Password"
-            required)
-          label.form__label(for="password") {{ $t('auth.password') }}
-        .form__group.u-center-text
-          button.btn.btn--green(@click="submit") {{ $t('auth.submit') }}
+    form.login__form(@submit.prevent autocomplete="off" novalidate)
+      h2.u-margin-bottom-small.u-center-text {{ $t('auth.login') }}
+      .login__errors(v-if="errorKeys.length > 0")
+        .login__errors__label {{ $t('auth.errors.label') }}
+        ul.login__errors__list
+          li.login__errors__error(v-for="errorKey in errorKeys") {{ $t(errorKey) }}
+        .u-margin-bottom-small
+      .form__group
+        input.form__input(
+          type="email"
+          id="email"
+          :pattern="EMAIL_REGEXP.source"
+          maxlength="30"
+          v-model="email"
+          placeholder="Email"
+          required)
+        label.form__label(for="email") {{ $t('auth.email') }}
+      .form__group
+        input.form__input(
+          type="text"
+          id="password"
+          :pattern="PASS_REGEXP.source"
+          v-model="password"
+          placeholder="Password"
+          required)
+        label.form__label(for="password") {{ $t('auth.password') }}
+      .login__errors__error(v-if="backendError") {{ backendError }}
+      .form__group.u-center-text
+        button.btn.btn--green(@click="handleSubmit") {{ $t('auth.submit') }}
+      .register__link.u-center-text
+        span.register__link__label {{ $t('auth.notRegistered') }}&nbsp
+        router-link.register__link__href(to="/register") {{ $t('auth.register') }}
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import * as AuthApi from '@/api/auth'
+import { extractErrorMessage } from '@/api/axios'
 
 @Component
 export default class Login extends Vue {
@@ -38,18 +45,37 @@ export default class Login extends Vue {
   password: string = ''
 
   errorKeys: string[] = []
+  backendError: string = ''
 
   readonly EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   readonly PASS_REGEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
 
   get isFormValid(): boolean {
-    return !this.errorKeys
+    return this.errorKeys.length === 0
+  }
+
+  async handleSubmit() {
+    try {
+      this.checkForm()
+
+      if (this.isFormValid) {
+        this.submit()
+      }
+    } catch (e) {
+      this.backendError = e
+    }
   }
 
   async submit() {
-    this.checkForm()
+    try {
+      const { email, password } = this
+      const response = await AuthApi.login({ email, password })
 
-    if (this.isFormValid) {
+      const { token } = response.data
+      AuthApi.setToken(token)
+    } catch (e) {
+      const { response } = e
+      this.backendError = extractErrorMessage(response)
     }
   }
 
@@ -95,7 +121,13 @@ export default class Login extends Vue {
       animation-timing-function ease-out
 
     &__form
-      width: 30vw;
+      width: 30vw
+
+      .register__link
+        font-size 1.5rem
+
+        &__href
+          color: $color-primary-dark
 
     &__errors
       display flex

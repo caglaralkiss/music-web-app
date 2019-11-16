@@ -1,7 +1,7 @@
 {
   "auth": {
     "login": "Üye Girisi",
-    "register": "Kay",
+    "register": "Kayıt ol",
     "email": "Eposta",
     "password": "Sifre",
     "submit": "Onayla",
@@ -11,6 +11,7 @@
       "passwordRequired": "Şifre gereklidir",
       "invalidEmail": "Eposta, eposta formatında olmalıdır",
       "invalidPassword": "Şifre maximum 8 karaterden oluşup bir büyük, bir küçük ve bir sayı içermelidir"
-    }
+    },
+    "notRegistered": "Hesabın yok mu?"
   }
 }

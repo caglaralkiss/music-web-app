@@ -11,6 +11,7 @@
       "passwordRequired": "Password required",
       "invalidEmail": "Email must be in email format",
       "invalidPassword": "Password must include one digit, one lowercase, one uppercase letter and six  bug"
-    }
+    },
+    "notRegistered": "'Don't you have an account?"
   }
 }
