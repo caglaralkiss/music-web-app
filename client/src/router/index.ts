@@ -16,7 +16,7 @@ const routes = [
     component: Auth,
     children: [
       {
-        path: '',
+        path: 'login',
         name: 'auth',
         component: () => import(/* webpackChunkName: "login" */ '../components/Login.vue')
       },
