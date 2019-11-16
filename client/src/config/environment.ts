@@ -11,5 +11,6 @@ const RECORD_BY_PROCESS: Record<string, Environment> = {
 }
 
 export const currEnvironment = (): Environment => {
+  // @ts-ignore
   return RECORD_BY_PROCESS[process.env.NODE_ENV]
 }
