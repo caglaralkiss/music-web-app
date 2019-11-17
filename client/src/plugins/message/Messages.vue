@@ -103,7 +103,7 @@ export default class Messages extends Vue {
       display block
       position fixed
       z-index 1000
-      width 40vw
+      width 30vw
       bottom 0
       right 0
 

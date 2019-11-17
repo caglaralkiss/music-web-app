@@ -1,6 +1,6 @@
 <template lang="pug">
   div(id="app")
-    messages
+    messages(:max-message="3")
     router-view
 </template>
 
