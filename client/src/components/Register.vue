@@ -39,7 +39,6 @@
           placeholder="Password"
           required)
         label.form__label(for="password") {{ $t('auth.password') }}
-      .register__errors__error(v-if="backendError") {{ backendError }}
       .form__group.u-center-text
         button.btn.btn--green(@click="handleSubmit") {{ $t('auth.submit') }}
       .login__link.u-center-text
