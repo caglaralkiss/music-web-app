@@ -8,7 +8,8 @@
     "firstName": "İsim",
     "lastName": "Soyisim",
     "errors": {
-      "label": "Lütfen aşağıdaki hataları düzeltin: ",
+      "firstNameRequired": "İsim girilmesi zorunlu alandır.",
+      "lastNameRequired": "Soyisim girilmesi zorunlu alandır",
       "emailRequired": "Email gereklidir",
       "passwordRequired": "Şifre gereklidir",
       "invalidEmail": "Eposta, eposta formatında olmalıdır",
