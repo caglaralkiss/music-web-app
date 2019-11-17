@@ -5,6 +5,8 @@
     "email": "Email",
     "password": "Password",
     "submit": "Submit",
+    "firstName": "First name",
+    "lastName": "Last name",
     "errors": {
       "label": "Please correct the following errors: ",
       "emailRequired": "Email required",
@@ -12,6 +14,7 @@
       "invalidEmail": "Email must be in email format",
       "invalidPassword": "Password must include one digit, one lowercase, one uppercase letter and six  bug"
     },
-    "notRegistered": "'Don't you have an account?"
+    "notRegistered": "'Don't you have an account?",
+    "notLogin": "Do you have already an account?"
   }
 }

@@ -5,6 +5,8 @@
     "email": "Eposta",
     "password": "Sifre",
     "submit": "Onayla",
+    "firstName": "İsim",
+    "lastName": "Soyisim",
     "errors": {
       "label": "Lütfen aşağıdaki hataları düzeltin: ",
       "emailRequired": "Email gereklidir",
@@ -12,6 +14,7 @@
       "invalidEmail": "Eposta, eposta formatında olmalıdır",
       "invalidPassword": "Şifre maximum 8 karaterden oluşup bir büyük, bir küçük ve bir sayı içermelidir"
     },
-    "notRegistered": "Hesabın yok mu?"
+    "notRegistered": "Hehsabın yok mu?",
+    "notLogin": "Zaten bir hesabın var mı?"
   }
 }
