@@ -1,5 +1,6 @@
 <template lang="pug">
   div(id="app")
+    messages
     router-view
 </template>
 
