@@ -4,8 +4,11 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import i18n from './i18n'
+import { MessagesPlugin } from '@/plugins/message'
 
 Vue.config.productionTip = false
+
+Vue.use(MessagesPlugin)
 
 new Vue({
   router,
