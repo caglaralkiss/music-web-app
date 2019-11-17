@@ -1,0 +1,7 @@
+{
+  "message": {
+    "success": "Başarılı!",
+    "warning": "Uyarı!",
+    "error": "Hata!"
+  }
+}

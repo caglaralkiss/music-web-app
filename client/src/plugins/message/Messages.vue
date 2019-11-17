@@ -3,7 +3,7 @@
     transition-group(name="fade")
       .message__wrapper(v-for="message in activeMessages" :key="message.id" :data-id="message.id")
         div(:class="[`message__box`, `message__box__${ message.type }`]" @click="destroyMessage(message)")
-          .message__title(v-if="message.title") {{ message.title }}
+          .message__title(v-if="message.title") {{ isTranslationKey(message.title) ? $t(message.title) : message.title }}
           .message__body {{ message.text }}
 </template>
 
@@ -13,7 +13,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { bus } from './bus'
 import * as Defaults from './constants/message-defaults'
 import { MessageItem } from './interfaces/message-item'
-import { MessageItemState } from '@/plugins/message/constants'
+import { MessageItemState, MessageType } from '@/plugins/message/constants'
 
 @Component({
   name: 'Messages'
@@ -33,6 +33,14 @@ export default class Messages extends Vue {
 
   get isActiveMessagesExceed(): boolean {
     return this.activeMessages.length > this.maxMessage
+  }
+
+  get messageTypesAsList(): Array<string> {
+    return [
+      MessageType.Success,
+      MessageType.Error,
+      MessageType.Warning
+    ]
   }
 
   mounted() {
@@ -64,6 +72,7 @@ export default class Messages extends Vue {
   destroyMessage(message: MessageItem) {
     clearTimeout(message.timer)
     message.state = MessageItemState.Destroyed
+
     this.clearDestroyedMessages()
   }
 
@@ -77,6 +86,10 @@ export default class Messages extends Vue {
 
   clearDestroyedMessages() {
     this.messageList = this.messageList.filter(message => message.state !== MessageItemState.Destroyed)
+  }
+
+  isTranslationKey(possibleKey: string) {
+    return this.messageTypesAsList.includes(possibleKey)
   }
 
   private buildMessageFromEvent(event: Omit<MessageItem, 'id'>): MessageItem {

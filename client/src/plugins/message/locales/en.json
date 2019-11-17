@@ -1,0 +1,7 @@
+{
+  "message": {
+    "success": "Success!",
+    "warning": "Warning!",
+    "error": "Error!"
+  }
+}
