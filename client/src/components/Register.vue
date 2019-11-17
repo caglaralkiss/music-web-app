@@ -2,11 +2,6 @@
   .register
     form.register__form(@submit.prevent autocomplete="off" novalidate)
       h2.u-margin-bottom-small.u-center-text {{ $t('auth.register') }}
-      .register__errors(v-if="errorKeys.length > 0")
-        .register__errors__label {{ $t('auth.errors.label') }}
-        ul.register__errors__list
-          li.register__errors__error(v-for="errorKey in errorKeys") {{ $t(errorKey) }}
-        .u-margin-bottom-small
       .form__group
         input.form__input(
           type="text"
@@ -66,7 +61,6 @@ export default class Register extends Vue {
   password = ''
 
   errorKeys: string[] = []
-  backendError: string = ''
 
   readonly EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   readonly PASS_REGEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
@@ -75,25 +69,33 @@ export default class Register extends Vue {
     return this.errorKeys.length === 0
   }
 
-  async handleSubmit() {
-    try {
-      this.checkForm()
+  get validationError() {
+    if (!this.isFormValid) {
+      return this.$t(this.errorKeys[0]) as string
+    }
+  }
 
-      if (this.isFormValid) {
-        this.submit()
-      }
-    } catch (e) {
-      this.backendError = e
+  async handleSubmit() {
+    this.checkForm()
+
+    if (this.isFormValid) {
+      this.submit()
+    } else {
+      this.$message.error(this.validationError!)
     }
   }
 
   async submit() {
     try {
       const { firstName, lastName, email, password } = this
-      const response = await AuthApi.register({ firstName, lastName, email, password })
+      await AuthApi.register({ firstName, lastName, email, password })
+
+      await this.$router.push({
+        path: '/home'
+      })
     } catch (e) {
       const { response } = e
-      this.backendError = extractErrorMessage(response)
+      this.$message.error(extractErrorMessage(response))
     }
   }
 

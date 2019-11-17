@@ -2,11 +2,6 @@
   .login
     form.login__form(@submit.prevent autocomplete="off" novalidate)
       h2.u-margin-bottom-small.u-center-text {{ $t('auth.login') }}
-      .login__errors(v-if="errorKeys.length > 0")
-        .login__errors__label {{ $t('auth.errors.label') }}
-        ul.login__errors__list
-          li.login__errors__error(v-for="errorKey in errorKeys") {{ $t(errorKey) }}
-        .u-margin-bottom-small
       .form__group
         input.form__input(
           type="email"
@@ -19,14 +14,13 @@
         label.form__label(for="email") {{ $t('auth.email') }}
       .form__group
         input.form__input(
-          type="text"
+          type="password"
           id="password"
           :pattern="PASS_REGEXP.source"
           v-model="password"
           placeholder="Password"
           required)
         label.form__label(for="password") {{ $t('auth.password') }}
-      .login__errors__error(v-if="backendError") {{ backendError }}
       .form__group.u-center-text
         button.btn.btn--green(@click="handleSubmit") {{ $t('auth.submit') }}
       .register__link.u-center-text
@@ -45,7 +39,6 @@ export default class Login extends Vue {
   password: string = ''
 
   errorKeys: string[] = []
-  backendError: string = ''
 
   readonly EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   readonly PASS_REGEXP = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
@@ -54,15 +47,19 @@ export default class Login extends Vue {
     return this.errorKeys.length === 0
   }
 
-  async handleSubmit() {
-    try {
-      this.checkForm()
+  get validationError() {
+    if (!this.isFormValid) {
+      return this.$t(this.errorKeys[0]) as string
+    }
+  }
 
-      if (this.isFormValid) {
-        this.submit()
-      }
-    } catch (e) {
-      this.backendError = e
+  async handleSubmit() {
+    this.checkForm()
+
+    if (this.isFormValid) {
+      this.submit()
+    } else {
+      this.$message.error(this.validationError!)
     }
   }
 
@@ -75,7 +72,7 @@ export default class Login extends Vue {
       AuthApi.setToken(token)
     } catch (e) {
       const { response } = e
-      this.backendError = extractErrorMessage(response)
+      this.$message.error(extractErrorMessage(response))
     }
   }
 
