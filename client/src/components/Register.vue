@@ -43,7 +43,7 @@
         button.btn.btn--green(@click="handleSubmit") {{ $t('auth.submit') }}
       .login__link.u-center-text
         span.login__link__label {{ $t('auth.notLogin') }}&nbsp
-        router-link.login__link__href(to="/register") {{ $t('auth.login') }}
+        router-link.login__link__href(to="login") {{ $t('auth.login') }}
 </template>
 
 <script lang="ts">

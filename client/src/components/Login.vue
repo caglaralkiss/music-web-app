@@ -25,7 +25,7 @@
         button.btn.btn--green(@click="handleSubmit") {{ $t('auth.submit') }}
       .register__link.u-center-text
         span.register__link__label {{ $t('auth.notRegistered') }}&nbsp
-        router-link.register__link__href(to="/register") {{ $t('auth.register') }}
+        router-link.register__link__href(to="register") {{ $t('auth.register') }}
 </template>
 
 <script lang="ts">
