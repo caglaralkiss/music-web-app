@@ -1,31 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Auth from '@/views/Auth.vue'
-import Shell from '@/views/Shell.vue'
+import Auth from './auth'
+import Shell from './shell'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'shell',
-    component: Shell
-  },
-  {
-    path: '/auth',
-    component: Auth,
-    children: [
-      {
-        path: 'login',
-        name: 'auth',
-        component: () => import(/* webpackChunkName: "login" */ '../components/Login.vue')
-      },
-      {
-        path: 'register',
-        component: () => import(/* webpackChunkName: "register" */ '../components/Register.vue')
-      }
-    ]
-  }
+  Shell,
+  Auth
 ]
 
 const router = new VueRouter({
