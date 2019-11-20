@@ -17,5 +17,9 @@
     },
     "notRegistered": "Hehsabın yok mu?",
     "notLogin": "Zaten bir hesabın var mı?"
+  },
+  "shell": {
+    "home": "Ana sayfa",
+    "search": "Ara"
   }
 }

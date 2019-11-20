@@ -17,5 +17,9 @@
     },
     "notRegistered": "'Don't you have an account?",
     "notLogin": "Do you have already an account?"
+  },
+  "shell": {
+    "home": "Home",
+    "search": "Search"
   }
 }

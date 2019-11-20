@@ -2,15 +2,19 @@
   .shell
     .shell__header
       .shell__header__banner
-        .shell__header__banner__logo: img(src="@/assets/logo.png")
+        .shell__header__banner__logo: font-awesome-icon.fa-logo(icon="music" size="lg")
         .shell__header__banner__title: h1 Musicify
       .shell__header__nav
           router-link(to="/auth/register") {{ $t('auth.register') }}
           router-link(to="/auth/login") {{ $t('auth.login') }}
     .shell__body
       .shell__body__nav
-        router-link(to="/").shell__nav__link Link #1
-        router-link(to="/").shell__nav__link Link #2
+        router-link.shell__body__nav__item(:class="currentRouteName === 'home' ? 'active' : ''" to="home")
+          font-awesome-icon.fa-logo(icon="home" size="lg")
+          h2 {{ $t('shell.home') }}
+        router-link.shell__body__nav__item(:class="currentRouteName === 'search' ? 'active' : ''" to="search")
+          font-awesome-icon.fa-logo(icon="search" size="lg")
+          h2 {{ $t('shell.search') }}
       .shell__body__main
         router-view
     .shell__footer Footer
@@ -20,11 +24,11 @@
 
 import { Vue, Component } from 'vue-property-decorator'
 
-@Component({
-  components: {
-  }
-})
+@Component
 export default class Shell extends Vue {
+  get currentRouteName() {
+    return this.$route.name
+  }
 }
 
 </script>
@@ -44,15 +48,17 @@ export default class Shell extends Vue {
         display flex
         flex-direction row
         justify-content center
+        margin-left 1rem
 
         &__logo
           display flex
           flex-direction column
           justify-content center
 
-          img
-            margin-left 15px
-            height 35px
+          .fa-logo
+            color: $color-white
+            margin 0 7px
+            font-size 3rem
 
         &__title
           display flex
@@ -85,6 +91,27 @@ export default class Shell extends Vue {
         background-color $color-tertiary-dark
         width 15%
         height 100%
+        padding-top 2rem
+
+        &__item
+          display flex
+          flex-direction row
+          justify-content center
+          align-items center
+          margin 0 10rem 2rem 0
+          color $color-grey-dark
+
+          text-decoration none
+          border-left 3px solid
+          border-left-color $color-tertiary-dark
+
+          .fa-logo
+            font-size 2.3rem
+            margin-right 2rem
+
+        .active
+          color: $color-white
+          border-left-color $color-primary-dark
 
       &__main
         display flex
