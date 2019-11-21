@@ -31,6 +31,11 @@ export class Router {
         try {
             const route: Route = this.findRoute(req.path);
 
+            await route.filterManager.doFilter(req, res)
+            if (res.statusCode) {
+                return;
+            }
+
             const {status, payload, headers}: HttpResponse = await route.passToController(req, res);
 
             switch (headers['content-type']) {

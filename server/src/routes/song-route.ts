@@ -9,8 +9,6 @@ export class SongRoute extends Route {
     }
 
     async passToController(req: AppRequest, res: ServerResponse): Promise<HttpResponse> {
-        await this.filterManager.doFilter(req, res);
-
         let finalResponse: HttpResponse = await this._controller[req.method](req);
 
         if (!finalResponse) {
