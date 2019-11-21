@@ -22,5 +22,10 @@ export class CorsFilter implements Filter {
             res.end();
             return;
         }
+
+        for (let [header, value] of Object.entries(headers)) {
+            res.setHeader(header, value)
+        }
+        return;
     }
 }
