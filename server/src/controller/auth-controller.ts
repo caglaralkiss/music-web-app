@@ -36,8 +36,8 @@ export class AuthController implements Controller {
             }
         } catch (e) {
             console.log(e);
-            switch (e) {
-                case EntityNotExistsError:
+            switch (true) {
+                case e instanceof EntityNotExistsError:
                     const err = new BaseError(`User with ${req.body.email} does not exists`);
                     return new ResponseBuilder()
                         .setStatus(StatusCode.BAD_REQUEST)
