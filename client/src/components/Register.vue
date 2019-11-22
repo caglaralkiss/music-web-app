@@ -5,21 +5,21 @@
       .form__group
         input.form__input(
           type="text"
-          id="firstName"
+          id="name"
           maxlength="30"
-          v-model="firstName"
+          v-model="name"
           placeholder="First name"
           required)
-        label.form__label(for="firstName") {{ $t('auth.firstName') }}
+        label.form__label(for="name") {{ $t('auth.firstName') }}
       .form__group
         input.form__input(
           type="text"
-          id="lastName"
+          id="surname"
           maxlength="30"
-          v-model="lastName"
+          v-model="surname"
           placeholder="Last name"
           required)
-        label.form__label(for="lastName") {{ $t('auth.lastName') }}
+        label.form__label(for="surname") {{ $t('auth.lastName') }}
       .form__group
         input.form__input(
           type="email"
@@ -54,8 +54,8 @@ import * as AuthApi from '@/api/auth'
 
 @Component
 export default class Register extends Vue {
-  firstName = ''
-  lastName = ''
+  name = ''
+  surname = ''
   email = ''
   password = ''
 
@@ -86,8 +86,8 @@ export default class Register extends Vue {
 
   async submit() {
     try {
-      const { firstName, lastName, email, password } = this
-      await AuthApi.register({ firstName, lastName, email, password })
+      const { name, surname, email, password } = this
+      await AuthApi.register({ name, surname, email, password })
 
       await this.$router.push({
         path: '/home'
@@ -101,11 +101,11 @@ export default class Register extends Vue {
   checkForm() {
     this.errorKeys = []
 
-    if (!this.firstName) {
+    if (!this.name) {
       this.errorKeys.push('auth.errors.firstNameRequired')
     }
 
-    if (!this.lastName) {
+    if (!this.surname) {
       this.errorKeys.push('auth.errors.lastNameRequired')
     }
 

@@ -4,8 +4,8 @@ export interface LoginSubmit {
 }
 
 export interface RegisterSubmit {
-  firstName: string,
-  lastName: string,
+  name: string,
+  surname: string,
   email: string,
   password: string
 }
