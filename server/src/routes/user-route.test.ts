@@ -22,17 +22,6 @@ describe('UserRoute', () => {
       userRoute = new UserRoute({path: 'users', controller, filters: [filter]});
    });
 
-   test('should execute filters first', async () => {
-       spyOn(userRoute.filterManager, 'doFilter');
-       spyOn(controller, 'get').and.returnValue(Promise.resolve({status: 200, payload: {}, headers: {}}));
-
-       const req: AppRequest = {method: HttpMethod.GET} as AppRequest;
-       const res: ServerResponse = {} as ServerResponse;
-       await userRoute.passToController(req, res);
-
-       expect(userRoute.filterManager.doFilter).toHaveBeenCalledWith(req, res);
-   });
-
    test('should pass request to the correct method', async () => {
        const req: AppRequest = {method: HttpMethod.DELETE} as AppRequest;
        const res: ServerResponse = {} as ServerResponse;
