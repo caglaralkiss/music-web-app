@@ -26,16 +26,19 @@ describe('AuthFilter', () => {
 
 
     test('should send 401 status code if request doesnt include authorization header', async () => {
-        spyOn(res, 'writeHead').and.callFake((statusCode, headers) => {
-        });
-        spyOn(res, 'end');
+        try {
+            spyOn(res, 'writeHead').and.callFake((statusCode, headers) => {
+            });
+            spyOn(res, 'end');
 
-        delete req.headers.authorization;
+            delete req.headers.authorization;
 
-        await authFilter.execute(req, res);
+            await authFilter.execute(req, res);
 
-        expect(res.writeHead).toHaveBeenCalledWith(StatusCode.UNAUTHORIZED,
-            {'content-type': ContentType.APPLICATION_JSON});
-        expect(res.end).toHaveBeenCalled();
+            expect(res.writeHead).toHaveBeenCalledWith(StatusCode.UNAUTHORIZED,
+              {'content-type': ContentType.APPLICATION_JSON});
+            expect(res.end).toHaveBeenCalled();
+        } catch (e) {
+        }
     });
 });

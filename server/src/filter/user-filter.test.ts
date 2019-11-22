@@ -2,6 +2,7 @@ import {UserFilter} from "./user-filter";
 import {AppRequest, ContentType, HttpMethod, StatusCode} from "../core/http";
 import {IncomingMessage, ServerResponse} from 'http';
 import {BaseError} from "../core/error";
+import { FilterError } from '../core/error/filter/filter-error';
 
 describe('UserFilter', () => {
     let userFilter: UserFilter;
@@ -26,13 +27,17 @@ describe('UserFilter', () => {
     });
 
     test('should filter request with DELETE method when email is not defined', async () => {
-        req.queryStringObj.id = undefined;
-        req.method = HttpMethod.DELETE;
+        try {
+            req.queryStringObj.id = undefined;
+            req.method = HttpMethod.DELETE;
 
-        await userFilter.execute(req, res);
+            await userFilter.execute(req, res);
 
-        expect(res.writeHead).toHaveBeenCalledWith(StatusCode.BAD_REQUEST, {'content-type': ContentType.APPLICATION_JSON});
-        expect(res.end).toHaveBeenCalledWith(JSON.stringify(new BaseError('Email is required!').getJson()));
+            expect(res.writeHead).toHaveBeenCalledWith(StatusCode.BAD_REQUEST, {'content-type': ContentType.APPLICATION_JSON});
+            expect(res.end).toHaveBeenCalledWith(JSON.stringify(new BaseError('Email is required!').getJson()));
+        } catch (e) {
+            expect(e).toBeInstanceOf(FilterError)
+        }
     });
 
     test('should pass filter request with DELETE method when email is valid', async () => {
@@ -46,33 +51,41 @@ describe('UserFilter', () => {
     });
 
     test('should filter request with POST method when required fields are absent', async () => {
-        req.body = {
-            name: 'mock',
-            surname: 'mockson',
-            email: 'mockmockson@gmail.com',
-            password: null
-        };
-        req.method = HttpMethod.POST;
+        try {
+            req.body = {
+                name: 'mock',
+                surname: 'mockson',
+                email: 'mockmockson@gmail.com',
+                password: null
+            };
+            req.method = HttpMethod.POST;
 
-        await userFilter.execute(req, res);
+            await userFilter.execute(req, res);
 
-        expect(res.writeHead).toHaveBeenCalledWith(StatusCode.BAD_REQUEST, {'content-type': ContentType.APPLICATION_JSON});
-        expect(res.end).toHaveBeenCalledWith(JSON.stringify(new BaseError('Password is required!').getJson()));
+            expect(res.writeHead).toHaveBeenCalledWith(StatusCode.BAD_REQUEST, {'content-type': ContentType.APPLICATION_JSON});
+            expect(res.end).toHaveBeenCalledWith(JSON.stringify(new BaseError('Password is required!').getJson()));
+        } catch (e) {
+            expect(e).toBeInstanceOf(FilterError)
+        }
     });
 
     test('should filter request with POST method when one field is not valid', async () => {
-        req.body = {
-            name: 'mock',
-            surname: 'mockson',
-            email: 'mockmockson',
-            password: "chuck1234560"
-        };
-        req.method = HttpMethod.POST;
+        try {
+            req.body = {
+                name: 'mock',
+                surname: 'mockson',
+                email: 'mockmockson',
+                password: "chuck1234560"
+            };
+            req.method = HttpMethod.POST;
 
-        await userFilter.execute(req, res);
+            await userFilter.execute(req, res);
 
-        expect(res.writeHead).toHaveBeenCalledWith(StatusCode.BAD_REQUEST, {'content-type': ContentType.APPLICATION_JSON});
-        expect(res.end).toHaveBeenCalledWith(JSON.stringify(new BaseError('Mail is not valid!').getJson()));
+            expect(res.writeHead).toHaveBeenCalledWith(StatusCode.BAD_REQUEST, {'content-type': ContentType.APPLICATION_JSON});
+            expect(res.end).toHaveBeenCalledWith(JSON.stringify(new BaseError('Mail is not valid!').getJson()));
+        } catch (e) {
+            expect(e).toBeInstanceOf(FilterError)
+        }
     });
 
 
