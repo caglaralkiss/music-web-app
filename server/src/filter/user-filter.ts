@@ -4,6 +4,7 @@ import {ServerResponse} from "http";
 import {BaseError} from "../core/error";
 import {User} from "../domain";
 import {UserValidator} from "../util/validator";
+import { FilterError } from '../core/error/filter/filter-error';
 
 export class UserFilter implements Filter {
     async execute(req: AppRequest, res: ServerResponse): Promise<void> {
@@ -29,6 +30,7 @@ export class UserFilter implements Filter {
         if (error) {
             res.writeHead(StatusCode.BAD_REQUEST, {'content-type': ContentType.APPLICATION_JSON});
             res.end(JSON.stringify(error.getJson()));
+            throw new FilterError()
         }
     }
 

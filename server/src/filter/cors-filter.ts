@@ -20,12 +20,10 @@ export class CorsFilter implements Filter {
         if (req.method === HttpMethod.OPTIONS) {
             res.writeHead(204, headers);
             res.end();
-            return;
         }
 
         for (let [header, value] of Object.entries(headers)) {
             res.setHeader(header, value)
         }
-        return;
     }
 }

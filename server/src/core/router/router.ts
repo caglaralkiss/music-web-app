@@ -8,6 +8,7 @@ import {AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode} from
 import {ServerResponse} from "http";
 import {Route} from "./route";
 import {BaseError, RouterError} from "../error";
+import { FilterError } from '../error/filter/filter-error';
 
 export class Router {
     /* Assigned routes */
@@ -32,9 +33,6 @@ export class Router {
             const route: Route = this.findRoute(req.path);
 
             await route.filterManager.doFilter(req, res)
-            if (res.statusCode) {
-                return;
-            }
 
             const {status, payload, headers}: HttpResponse = await route.passToController(req, res);
 
@@ -57,6 +55,11 @@ export class Router {
             }
         } catch (e) {
             let httpResponse: HttpResponse;
+
+            if (e instanceof FilterError) {
+                // Filters already arranged ServerResponse. Don't continue
+                return
+            }
 
             switch (true) {
                 case e instanceof RouterError:

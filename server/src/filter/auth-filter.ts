@@ -5,6 +5,7 @@ import {CrudRepository} from "../repository";
 import {User} from "../domain";
 import {verify} from "jsonwebtoken";
 import {Config} from "../config/config";
+import { FilterError } from '../core/error/filter/filter-error';
 
 export class AuthFilter implements Filter {
 
@@ -28,6 +29,7 @@ export class AuthFilter implements Filter {
 
         res.writeHead(StatusCode.UNAUTHORIZED, {'content-type': ContentType.APPLICATION_JSON});
         res.end(JSON.stringify({'Error': 'You are not authorized!'}));
+        throw new FilterError()
     }
 
 }
