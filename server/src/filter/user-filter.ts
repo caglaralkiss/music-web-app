@@ -35,11 +35,20 @@ export class UserFilter implements Filter {
     }
 
     private _postError(body: Partial<User>): BaseError {
-        if (!UserValidator.validateName(body.name)) {
-            return new BaseError('Name is required!');
+        if (body.name) {
+            if (!UserValidator.validateName(body.name)) {
+                console.log('afd')
+                return new BaseError('Invalid name! Please use only alphabetic characters');
+            }
+        } else {
+            return new BaseError('First name is required!');
         }
 
-        if (!UserValidator.validateName(body.name)) {
+        if (body.surname) {
+            if (!UserValidator.validateName(body.name)) {
+                return new BaseError('Invalid name! Please use only alphabetic characters.');
+            }
+        } else {
             return new BaseError('Surname is required!');
         }
 

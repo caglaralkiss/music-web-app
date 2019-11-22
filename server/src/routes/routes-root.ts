@@ -1,4 +1,4 @@
-import {AuthFilter, CorsFilter, LoggingFilter} from "../filter";
+import { AuthFilter, CorsFilter, LoggingFilter, UserFilter } from "../filter";
 import {AudioRoute, AuthRoute, ImageRoute, PingRoute, SongRoute, UserRoute} from "./";
 import {Controller} from "../core/router";
 import fs from "../util/promisified/fs";
@@ -26,7 +26,12 @@ const songRoute = new SongRoute({
 const userRoute = new UserRoute({
     path: ApiEndpoint.USER,
     controller: ControllerRoot.UserController,
-    filters: [new CorsFilter(), new AuthFilter({userRepository: RepositoryRoot.UserRepository}), new LoggingFilter()]
+    filters: [
+        new CorsFilter(),
+        new UserFilter(),
+        new AuthFilter({userRepository: RepositoryRoot.UserRepository}),
+        new LoggingFilter()
+    ]
 });
 
 const imgRoute = new ImageRoute({path: ApiEndpoint.IMAGE, controller: {} as Controller, filters: [new CorsFilter()], fs});
