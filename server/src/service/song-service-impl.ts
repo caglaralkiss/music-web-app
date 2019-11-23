@@ -1,7 +1,9 @@
-import {SongService} from "./song-service";
-import {Song} from "../domain";
-import {CrudRepository} from "../repository";
-import {SongAlreadyExistsError, SongNotExistsError} from "../core/error/service/song-error";
+import { SongService } from "./song-service";
+import { Song } from "../domain";
+import { CrudRepository } from "../repository";
+import { SongAlreadyExistsError, SongNotExistsError } from "../core/error/service/song-error";
+import { Page, PagedResult } from '../util/pagination';
+import getPagedResult from '../util/pagination/paginator';
 
 export class SongServiceImpl implements SongService {
     private _songRepository: CrudRepository<Song, string>;
@@ -28,6 +30,19 @@ export class SongServiceImpl implements SongService {
 
     async getSong(id: string): Promise<Song> {
         return await this._songRepository.findById(id);
+    }
+
+    async getSongs(params: { search?: string, page: Page}): Promise<Iterable<Song> | PagedResult<Song>> {
+        const { search, page } = params
+
+        const songs = Array.from<Song>(await this._songRepository.findAll())
+
+        if (!search) {
+            return getPagedResult<Song>(songs, page)
+        }
+
+        const searchedSongs = songs.filter(song => song.title.includes(search))
+        return getPagedResult<Song>(searchedSongs, page)
     }
 
     async updateSong(song: Song): Promise<void> {

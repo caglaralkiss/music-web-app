@@ -1,12 +1,13 @@
-import {Controller} from "../core/router";
-import {AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode} from "../core/http";
-import {Song} from "../domain";
-import {BaseError, EntityNotExistsError} from "../core/error";
-import {Config} from "../config/config";
-import {ApiEndpoint} from "../config/api-endpoint";
-import {Crypto} from "../util/security/crypto";
-import {SongService} from "../service";
-import {SongAlreadyExistsError, SongNotExistsError} from "../core/error/service/song-error";
+import { Controller } from "../core/router";
+import { AppRequest, ContentType, HttpResponse, ResponseBuilder, StatusCode } from "../core/http";
+import { Song } from "../domain";
+import { BaseError, EntityNotExistsError } from "../core/error";
+import { Config } from "../config/config";
+import { ApiEndpoint } from "../config/api-endpoint";
+import { Crypto } from "../util/security/crypto";
+import { SongService } from "../service";
+import { SongAlreadyExistsError, SongNotExistsError } from "../core/error/service/song-error";
+import { Page, PagedResult } from '../util/pagination';
 
 export class SongController implements Controller {
     private _songService: SongService;
@@ -19,15 +20,20 @@ export class SongController implements Controller {
         this._fs = fs;
     }
 
-    async get(req: AppRequest): Promise<HttpResponse<Song>> {
+    async get(req: AppRequest): Promise<HttpResponse<Iterable<Song> | PagedResult<Song>>> {
         try {
-            const {id} = req.queryStringObj;
+            const { pageNum, offset, search } = req.queryStringObj;
 
-            const song = await this._songService.getSong(id);
+            const page: Page = {
+                pageNum: Number(pageNum),
+                offset: Number(offset)
+            }
 
-            return new ResponseBuilder<Song>()
+            const songs = await this._songService.getSongs({ page, search });
+
+            return new ResponseBuilder<Iterable<Song> | PagedResult<Song>>()
                 .setStatus(StatusCode.OK)
-                .setPayload(song)
+                .setPayload(songs)
                 .build();
         } catch (e) {
             return this._errorHandler(e);
