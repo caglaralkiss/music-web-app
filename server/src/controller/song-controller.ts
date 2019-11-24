@@ -49,9 +49,6 @@ export class SongController implements Controller {
                 const {cover, audio} = files;
 
                 const id = Crypto.generateId();
-                this._readToWriteStream(cover.path, `${this.BASE_DIR}${ApiEndpoint.IMAGE}/${id}.jpeg`);
-                this._readToWriteStream(audio.path, `${this.BASE_DIR}${ApiEndpoint.AUDIO}/${id}.mp3`);
-
                 const song: Song = {
                     id,
                     title: title as string,
@@ -61,7 +58,11 @@ export class SongController implements Controller {
                     audio: `${this.URL}/${ApiEndpoint.AUDIO}?id=${id}`,
                     owner: req.id
                 };
-                await this._songService.createSong(song);
+                await Promise.all<void, void, void>([
+                    this._readToWriteStream(cover.path, `${this.BASE_DIR}${ApiEndpoint.IMAGE}/${id}.jpeg`),
+                    this._readToWriteStream(audio.path, `${this.BASE_DIR}${ApiEndpoint.AUDIO}/${id}.mp3`),
+                    this._songService.createSong(song)
+                ])
 
                 return new ResponseBuilder().setStatus(StatusCode.OK).build()
             } else {
