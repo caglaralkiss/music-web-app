@@ -21,5 +21,9 @@
   "shell": {
     "home": "Home",
     "search": "Search"
+  },
+  "songs": {
+    "title": "Songs",
+    "subTitle": "Click & listen song you like!"
   }
 }

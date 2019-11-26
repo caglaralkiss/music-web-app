@@ -21,5 +21,9 @@
   "shell": {
     "home": "Ana sayfa",
     "search": "Ara"
+  },
+  "songs": {
+    "title": "Şarkılar",
+    "subTitle": "Tıkla ve seçtiğin şarkıyı hemen dinle!"
   }
 }
