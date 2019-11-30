@@ -17,14 +17,16 @@
           h2 {{ $t('shell.search') }}
       .shell__body__main
         router-view
-    .shell__footer Footer
+    .shell__footer: audio-player
 </template>
 
 <script lang="ts">
 
 import { Vue, Component } from 'vue-property-decorator'
-
-@Component
+import AudioPlayer from '@/components/shared/AudioPlayer.vue'
+@Component({
+  components: { AudioPlayer }
+})
 export default class Shell extends Vue {
   get currentRouteName() {
     return this.$route.name
@@ -120,8 +122,6 @@ export default class Shell extends Vue {
         height 100%
         background-color rgba($color-tertiary-dark, .98)
     &__footer
-      display flex
-      flex-direction row
       height 15 vh
       background-color rgba($color-tertiary-dark, .94)
 
