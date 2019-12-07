@@ -11,6 +11,7 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator'
 @Component
 export default class ProgressBar extends Vue {
   @Prop({ default: 100 }) width!: number
+  @Prop({ default: false }) clickable!: boolean
 
   realWidth!: number
 
@@ -22,9 +23,11 @@ export default class ProgressBar extends Vue {
 
   @Emit('seek')
   handleBarClick($event: MouseEvent) {
-    this.realWidth = this.calculateClickedPointPercentage($event)
-    this.$forceUpdate()
-    return this.realWidth
+    if (this.clickable) {
+      this.realWidth = this.calculateClickedPointPercentage($event)
+      this.$forceUpdate()
+      return this.realWidth
+    }
   }
 
   calculateClickedPointPercentage($event: MouseEvent) {

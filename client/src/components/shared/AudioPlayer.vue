@@ -14,7 +14,7 @@
           font-awesome-icon.fa-icon.small(icon="redo-alt" :class="isLoop ? 'looped' : ''" @click="repeat")
         .player__audio__controls
           .player__audio__elapsed {{ elapsedTime }}
-          .player__audio__bar: progress-bar(:width="currentTimePercentage" @seek="seekTime")
+          .player__audio__bar: progress-bar(:width="currentTimePercentage" @seek="seekTime" :clickable="!!song")
           .player__audio__total {{ duration }}
     .player__volume
       font-awesome-icon.fa-icon.small(:icon="volume === 0 ? 'volume-mute' : 'volume-up'" @click="mute")
@@ -91,6 +91,10 @@ export default class AudioPlayer extends Vue {
   }
 
   seekTime(timePercentage: number) {
+    if (!this.song) {
+      return
+    }
+
     const { duration } = this.player
     this.player.currentTime = (duration * timePercentage) / 100
   }
