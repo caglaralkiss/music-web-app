@@ -16,7 +16,9 @@
           .player__audio__elapsed {{ elapsedTime }}
           .player__audio__bar: progress-bar(:width="currentTimePercentage" @seek="seekTime")
           .player__audio__total {{ duration }}
-    .player__volume: progress-bar(:width="volume" @seek="volumeSeekHandler")
+    .player__volume
+      font-awesome-icon.fa-icon.small(:icon="volume === 0 ? 'volume-mute' : 'volume-up'" @click="mute")
+      progress-bar.player__volume__bar(:width="volume" @seek="volumeSeekHandler")
 </template>
 
 <script lang="ts">
@@ -81,6 +83,10 @@ export default class AudioPlayer extends Vue {
   volumeSeekHandler(percentage: number) {
     this.changeVolume(percentage)
     this.player.volume = percentage / 100
+  }
+
+  mute() {
+    this.volumeSeekHandler(0)
   }
 
   seekTime(timePercentage: number) {
@@ -189,6 +195,22 @@ export default class AudioPlayer extends Vue {
         font-size 1.2rem
 
     &__volume
-      width: 10%
+      display flex
+      flex-direction row
+      justify-content space-between
+      width 10%
       padding-right 10px
+
+      .fa-icon
+        color $color-grey-dark-2
+        cursor pointer
+        &:hover
+          color $color-grey-light-1
+
+      .small
+        font-size 1.5rem
+
+      &__bar
+        margin-left 10px
+        width 90%
 </style>

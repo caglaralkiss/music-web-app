@@ -8,8 +8,10 @@ import { faStepBackward } from '@fortawesome/free-solid-svg-icons/faStepBackward
 import { faStepForward } from '@fortawesome/free-solid-svg-icons/faStepForward'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons/faRedoAlt'
 import { faPauseCircle } from '@fortawesome/free-regular-svg-icons/faPauseCircle'
+import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp'
+import { faVolumeMute } from '@fortawesome/free-solid-svg-icons/faVolumeMute'
 
-export const loadFonts = () => {
+export const loadIcons = () => {
   library.add(
     faMusic,
     faPlayCircle,
@@ -19,6 +21,8 @@ export const loadFonts = () => {
     faRandom,
     faStepBackward,
     faStepForward,
-    faRedoAlt
+    faRedoAlt,
+    faVolumeUp,
+    faVolumeMute
   )
 }

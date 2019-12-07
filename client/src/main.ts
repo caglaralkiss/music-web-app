@@ -4,11 +4,11 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import i18n from './i18n'
-import { loadFonts } from '@/font-awesome'
+import { loadIcons } from '@/font-awesome'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { MessagesPlugin } from '@/plugins/message'
 
-loadFonts()
+loadIcons()
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
