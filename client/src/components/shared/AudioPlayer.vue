@@ -1,6 +1,6 @@
 <template lang="pug">
   .player
-    .player__current {{ songTitle }}
+    .player__current: current-playing
     .player__wrapper
       audio(ref="player" :loop="isLoop" @timeupdate="onTimeChange" @ended="onSongEnded")
       .player__audio
@@ -28,10 +28,11 @@ import { Action, Getter } from 'vuex-class'
 import { Song } from '@/interfaces'
 import { AudioPlayerState, UserMode } from '@/store/player/types'
 import ProgressBar from '@/components/shared/ProgressBar.vue'
+import CurrentPlaying from '@/components/shared/CurrentPlaying.vue'
 
 const namespace = 'player'
 @Component({
-  components: { ProgressBar }
+  components: { CurrentPlaying, ProgressBar }
 })
 export default class AudioPlayer extends Vue {
   @Action('clearSong', { namespace }) clearSong: any
@@ -140,12 +141,11 @@ export default class AudioPlayer extends Vue {
     align-items center
 
     &__current
-      color $color-white
-      background-color lawngreen
-      width 10%
+      margin-left 10px
+      width 20%
 
     &__wrapper
-      width 80%
+      width 60%
 
     &__audio
       display flex
@@ -179,7 +179,7 @@ export default class AudioPlayer extends Vue {
         display flex
         flex-direction row
         justify-content space-between
-        width 60%
+        width 70%
 
       &__bar
         width 90%
@@ -197,9 +197,9 @@ export default class AudioPlayer extends Vue {
     &__volume
       display flex
       flex-direction row
-      justify-content space-between
-      width 10%
-      padding-right 10px
+      justify-content flex-end
+      margin-right 10px
+      width 20%
 
       .fa-icon
         color $color-grey-dark-2
@@ -212,5 +212,5 @@ export default class AudioPlayer extends Vue {
 
       &__bar
         margin-left 10px
-        width 90%
+        width 50%
 </style>
