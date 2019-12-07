@@ -3,7 +3,7 @@
     lazy-image.song-card__image(:src="song.cover")
     .song-card__overlay
       .song-card__overlay__artist(:title="song.artist") {{ song.artist }}
-      font-awesome-icon.song-card__overlay__logo(:icon="faIconClasses" size="sm")
+      font-awesome-icon.song-card__overlay__logo(:icon="faIconClasses" size="sm" @click="playSong")
       .song-card__overlay__title(:title="song.title") {{ song.title }}
 </template>
 
@@ -12,6 +12,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Song } from '@/interfaces'
 import LazyImage from '@/components/shared/LazyImage.vue'
+import { Action } from 'vuex-class'
+
+const namespace = 'player'
 
 @Component({
   components: {
@@ -20,9 +23,14 @@ import LazyImage from '@/components/shared/LazyImage.vue'
 })
 export default class SongCard extends Vue {
   @Prop({ default: undefined }) song!: Song
+  @Action('loadSong', { namespace }) loadSong: any
 
   get faIconClasses() {
     return ['far', 'play-circle']
+  }
+
+  playSong() {
+    this.loadSong(this.song)
   }
 }
 
