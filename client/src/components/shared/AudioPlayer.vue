@@ -18,7 +18,7 @@
           .player__audio__total {{ duration }}
     .player__volume
       font-awesome-icon.fa-icon.small(:icon="volume === 0 ? 'volume-mute' : 'volume-up'" @click="mute")
-      progress-bar.player__volume__bar(:width="volume" @seek="volumeSeekHandler")
+      progress-bar.player__volume__bar(:width="volume" :clickable="true" @seek="volumeSeekHandler")
 </template>
 
 <script lang="ts">
@@ -87,7 +87,11 @@ export default class AudioPlayer extends Vue {
   }
 
   mute() {
-    this.volumeSeekHandler(0)
+    if (this.volume === 0) {
+      this.volumeSeekHandler(100)
+    } else {
+      this.volumeSeekHandler(0)
+    }
   }
 
   seekTime(timePercentage: number) {
