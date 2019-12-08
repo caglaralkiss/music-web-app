@@ -25,5 +25,8 @@
   "songs": {
     "title": "Şarkılar",
     "subTitle": "Tıkla ve seçtiğin şarkıyı hemen dinle!"
+  },
+  "search": {
+    "placeholder": "Dinlemek istediğin şarkının adını yaz!"
   }
 }

@@ -25,5 +25,8 @@
   "songs": {
     "title": "Songs",
     "subTitle": "Click & listen song you like!"
+  },
+  "search": {
+    "placeholder": "Enter the song you like to listen!"
   }
 }
