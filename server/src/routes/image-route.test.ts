@@ -1,8 +1,8 @@
-import {ImageRoute} from "./image-route";
-import {Controller} from "../core/router";
+import { ImageRoute } from "./image-route";
 import fs from "../util/promisified/fs";
-import {AppRequest, HttpMethod, HttpResponse, StatusCode} from "../core/http";
-import {ServerResponse} from 'http';
+import { AppRequest, HttpMethod, HttpResponse, StatusCode } from "../core/http";
+import { ServerResponse } from 'http';
+import { ImageController } from '../controller/image-controller';
 
 describe('ImageRoute', () => {
     let imageRoute: ImageRoute;
@@ -10,7 +10,7 @@ describe('ImageRoute', () => {
     let res: ServerResponse;
 
     beforeEach(() => {
-        imageRoute = new ImageRoute({path: 'image', controller: {} as Controller, filters: [], fs});
+        imageRoute = new ImageRoute({path: 'image', controller: new ImageController({ fs: {} }), filters: [] });
         req = {
             id: null,
             method: null,

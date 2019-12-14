@@ -1,8 +1,7 @@
 import { AuthFilter, CorsFilter, LoggingFilter, UserFilter } from "../filter";
-import {AudioRoute, AuthRoute, ImageRoute, PingRoute, SongRoute, UserRoute} from "./";
-import {Controller} from "../core/router";
-import fs from "../util/promisified/fs";
-import {ApiEndpoint} from "../config/api-endpoint";
+import { AudioRoute, AuthRoute, ImageRoute, PingRoute, SongRoute, UserRoute } from "./";
+import { Controller } from "../core/router";
+import { ApiEndpoint } from "../config/api-endpoint";
 import ControllerRoot from "../controller/controller-root";
 import RepositoryRoot from "../repository/repository-root";
 
@@ -34,9 +33,18 @@ const userRoute = new UserRoute({
     ]
 });
 
-const imgRoute = new ImageRoute({path: ApiEndpoint.IMAGE, controller: {} as Controller, filters: [new CorsFilter()], fs});
+const imgRoute = new ImageRoute({
+    path: ApiEndpoint.IMAGE,
+    controller: ControllerRoot.ImageController,
+    filters: [new CorsFilter()]});
+
+const audioRoute = new AudioRoute({
+    path: ApiEndpoint.AUDIO,
+    controller: ControllerRoot.AudioController,
+    filters: [new CorsFilter()]
+});
+
 const pingRoute = new PingRoute({path: 'ping', controller: {} as Controller, filters: []});
-const audioRoute = new AudioRoute({path: ApiEndpoint.AUDIO, controller: {} as Controller, filters: [new CorsFilter()], fs});
 
 export default {
     UserRoute: userRoute,

@@ -42,7 +42,7 @@ export abstract class Route {
 
             return {
                 ...finalResponse,
-                headers: {'content-type': ContentType.APPLICATION_JSON},
+                headers: finalResponse.headers ? finalResponse.headers : {'content-type': ContentType.APPLICATION_JSON},
                 payload: finalResponse.payload ? finalResponse.payload : {},
             }
         } else {
