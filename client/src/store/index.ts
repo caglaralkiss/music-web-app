@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex, { StoreOptions } from 'vuex'
 import { RootState } from '@/store/types'
 import { player } from '@/store/player'
+import { modal } from '@/store/modal'
 
 Vue.use(Vuex)
 
@@ -10,7 +11,8 @@ const store: StoreOptions<RootState> = {
     language: 'en'
   },
   modules: {
-    player
+    player,
+    modal
   }
 }
 
