@@ -1,7 +1,7 @@
-import {AppRequest, HttpResponse} from "../http";
-import {Controller} from "./controller";
-import {Filter, FilterManager, Target} from "../filter";
-import {ServerResponse} from "http";
+import { AppRequest, ContentType, HttpMethod, HttpResponse, ResponseBuilder, StatusCode } from "../http";
+import { Controller } from "./controller";
+import { Filter, FilterManager, Target } from "../filter";
+import { ServerResponse } from "http";
 
 export abstract class Route {
     get path(): string {
@@ -36,5 +36,28 @@ export abstract class Route {
      * @param req
      * @param res
      */
-    async abstract passToController(req: AppRequest, res: ServerResponse): Promise<HttpResponse>;
+    async passToController(req: AppRequest, res: ServerResponse): Promise<HttpResponse> {
+        if (this.isMethodAllowed(req.method)) {
+            let finalResponse: HttpResponse = await this._controller[req.method](req);
+
+            return {
+                ...finalResponse,
+                headers: {'content-type': ContentType.APPLICATION_JSON},
+                payload: finalResponse.payload ? finalResponse.payload : {},
+            }
+        } else {
+            return new ResponseBuilder()
+              .setStatus(StatusCode.METHOD_NOT_ALLOWED)
+              .setHeaders({'content-type': ContentType.APPLICATION_JSON})
+              .build();
+        }
+    }
+
+
+    /**
+     * Check whether the method is allowed in terms of route controller
+     */
+    isMethodAllowed(method: HttpMethod): boolean {
+        return !!this._controller[method]
+    }
 }
