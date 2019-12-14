@@ -1,11 +1,12 @@
 import { AuthFilter, CorsFilter, LoggingFilter, UserFilter } from "../filter";
-import { AudioRoute, AuthRoute, ImageRoute, PingRoute, SongRoute, UserRoute } from "./";
 import { Controller } from "../core/router";
 import { ApiEndpoint } from "../config/api-endpoint";
 import ControllerRoot from "../controller/controller-root";
 import RepositoryRoot from "../repository/repository-root";
+import { Route } from '../core/router';
+import { PingRoute } from './ping-route';
 
-const authRoute = new AuthRoute({
+const authRoute = new Route({
     path: ApiEndpoint.AUTH,
     controller: ControllerRoot.AuthController,
     filters: [
@@ -14,7 +15,7 @@ const authRoute = new AuthRoute({
     ]
 });
 
-const songRoute = new SongRoute({
+const songRoute = new Route({
     path: ApiEndpoint.SONG,
     controller: ControllerRoot.SongController,
     filters: [
@@ -22,7 +23,7 @@ const songRoute = new SongRoute({
     ]
 });
 
-const userRoute = new UserRoute({
+const userRoute = new Route({
     path: ApiEndpoint.USER,
     controller: ControllerRoot.UserController,
     filters: [
@@ -33,12 +34,12 @@ const userRoute = new UserRoute({
     ]
 });
 
-const imgRoute = new ImageRoute({
+const imgRoute = new Route({
     path: ApiEndpoint.IMAGE,
     controller: ControllerRoot.ImageController,
     filters: [new CorsFilter()]});
 
-const audioRoute = new AudioRoute({
+const audioRoute = new Route({
     path: ApiEndpoint.AUDIO,
     controller: ControllerRoot.AudioController,
     filters: [new CorsFilter()]

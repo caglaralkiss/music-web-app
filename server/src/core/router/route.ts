@@ -3,7 +3,7 @@ import { Controller } from "./controller";
 import { Filter, FilterManager, Target } from "../filter";
 import { ServerResponse } from "http";
 
-export abstract class Route {
+export class Route {
     get path(): string {
         return this._path;
     }
@@ -21,7 +21,7 @@ export abstract class Route {
      * @param controller - {@interface Controller} object that will be handle the request object.
      * @param filters - Array of {@interface Filter} that will intercept req/res object.
      */
-    protected constructor({path, controller, filters}: {path: string, controller: Controller, filters: Array<Filter>}) {
+    constructor({path, controller, filters}: {path: string, controller: Controller, filters: Array<Filter>}) {
         this._path = path;
         this._controller = controller;
         this._filterManager = new FilterManager(new Target());
