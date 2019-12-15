@@ -3,5 +3,6 @@ export enum ApiEndpoint {
     AUTH = 'users/auth',
     SONG = 'songs',
     AUDIO = 'audio',
-    IMAGE = 'images'
+    IMAGE = 'images',
+    PLAYLIST = 'playlists'
 }

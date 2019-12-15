@@ -45,6 +45,15 @@ const audioRoute = new Route({
     filters: [new CorsFilter()]
 });
 
+const playlistRoute = new Route({
+    path: ApiEndpoint.PLAYLIST,
+    controller: ControllerRoot.PlaylistController,
+    filters: [
+      new AuthFilter({ userRepository: RepositoryRoot.UserRepository }),
+      new CorsFilter(),
+    ]
+})
+
 const pingRoute = new PingRoute({path: 'ping', controller: {} as Controller, filters: []});
 
 export default {
@@ -53,5 +62,6 @@ export default {
     SongRoute: songRoute,
     AudioRoute: audioRoute,
     ImageRoute: imgRoute,
-    PingRoute: pingRoute
+    PingRoute: pingRoute,
+    PlaylistRoute: playlistRoute
 };
