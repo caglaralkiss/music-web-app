@@ -33,10 +33,11 @@ export class PlaylistServiceImpl implements PlaylistService {
     return this._playlistRepository.findById(id)
   }
 
-  async getPlaylists(params: { page?: Page; search?: string }): Promise<PagedResult<Playlist>> {
-    const { search, page } = params
+  async getPlaylists(params: { page?: Page; search?: string, owner: string }): Promise<PagedResult<Playlist>> {
+    const { search, page, owner } = params
 
-    const playlists = Array.from<Playlist>(await this._playlistRepository.findAll())
+    const playlists =
+      Array.from<Playlist>(await this._playlistRepository.findAll()).filter(playlist => playlist.owner.includes(owner))
 
     if (!search) {
       return getPagedResult<Playlist>(playlists, page)
