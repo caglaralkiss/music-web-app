@@ -5,6 +5,7 @@ const route: RouteConfig = {
   path: '/',
   name: 'shell',
   component: Shell,
+  redirect: 'home',
   children: [
     {
       path: 'search',
