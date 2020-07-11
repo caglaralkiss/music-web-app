@@ -13,6 +13,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import SongCard from '@/components/shared/SongCard.vue'
 import { Page, Song } from '@/interfaces'
 import * as SongApi from '@/api/song'
+import { extractErrorMessage } from '@/api/axios'
 
 @Component({
   components: {
@@ -52,7 +53,8 @@ export default class Home extends Vue {
 
       this.nextPage()
     } catch (e) {
-      this.$message.error(e)
+      const { response } = e
+      this.$message.error(extractErrorMessage(response))
     }
   }
 
