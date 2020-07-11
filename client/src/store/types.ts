@@ -1,3 +1,4 @@
 export interface RootState {
-  language: 'en' | 'tr'
+  language: 'en' | 'tr',
+  version: string
 }

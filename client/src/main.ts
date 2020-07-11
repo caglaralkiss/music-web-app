@@ -16,9 +16,16 @@ Vue.config.productionTip = false
 
 Vue.use(MessagesPlugin)
 
+store.subscribe((mutation, state) => {
+  localStorage.setItem('store', JSON.stringify(state))
+})
+
 new Vue({
   router,
   store,
+  beforeCreate() {
+    this.$store.commit('initStore')
+  },
   i18n,
   render: h => h(App)
 }).$mount('#app')
