@@ -19,7 +19,8 @@ const songRoute = new Route({
     path: ApiEndpoint.SONG,
     controller: ControllerRoot.SongController,
     filters: [
-        new CorsFilter()
+        new CorsFilter(),
+        new AuthFilter({ userRepository: RepositoryRoot.UserRepository }),
     ]
 });
 

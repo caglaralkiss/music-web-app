@@ -25,7 +25,7 @@ export class AuthController implements Controller {
 
             if (user.password === hashedPass) {
                 const {secret} = Config.getInstance();
-                const token = sign({id: user.email}, secret);
+                const token = sign({id: user.email}, secret, { expiresIn: 10000});
 
                 return new ResponseBuilder().setStatus(StatusCode.OK).setPayload({token}).build();
             } else {
