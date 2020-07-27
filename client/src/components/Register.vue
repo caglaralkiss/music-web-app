@@ -32,7 +32,7 @@
         label.form__label(for="email") {{ $t('auth.email') }}
       .form__group
         input.form__input(
-          type="text"
+          type="password"
           id="password"
           :pattern="PASS_REGEXP.source"
           v-model="password"
@@ -49,11 +49,19 @@
 <script lang="ts">
 
 import { Vue, Component } from 'vue-property-decorator'
-import { extractErrorMessage } from '@/api/axios'
-import * as AuthApi from '@/api/auth'
+import { Action } from 'vuex-class'
+
+const namespace = 'auth'
 
 @Component
 export default class Register extends Vue {
+  @Action('register', { namespace }) register!: (credentials: {
+    name: string,
+    surname: string
+    email: string,
+    password: string
+  }) => void
+
   name = ''
   surname = ''
   email = ''
@@ -87,14 +95,13 @@ export default class Register extends Vue {
   async submit() {
     try {
       const { name, surname, email, password } = this
-      await AuthApi.register({ name, surname, email, password })
+      await this.register({ name, surname, email, password })
 
       await this.$router.push({
-        path: '/home'
+        path: '/auth/login'
       })
     } catch (e) {
-      const { response } = e
-      this.$message.error(extractErrorMessage(response))
+      this.$message.error(e)
     }
   }
 

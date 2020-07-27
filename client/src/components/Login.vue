@@ -30,11 +30,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import * as AuthApi from '@/api/auth'
-import { extractErrorMessage } from '@/api/axios'
+import { Action } from 'vuex-class'
+
+const namespace: string = 'auth'
 
 @Component
 export default class Login extends Vue {
+  @Action('login', { namespace }) login!: (credentials: { email: string, password: string }) => void
+
   email: string = ''
   password: string = ''
 
@@ -66,13 +69,10 @@ export default class Login extends Vue {
   async submit() {
     try {
       const { email, password } = this
-      const response = await AuthApi.login({ email, password })
-
-      const { token } = response.data
-      AuthApi.setToken(token)
+      await this.login({ email, password })
+      await this.$router.push('/home')
     } catch (e) {
-      const { response } = e
-      this.$message.error(extractErrorMessage(response))
+      this.$message.error(e)
     }
   }
 
