@@ -2,7 +2,7 @@
   .search
     .search__input: input.form__input(v-model="searchTerm" type="text" maxlength="30" :placeholder="$t('search.placeholder')")
     .search__result
-      song-card(v-for="song in songs" :song="song")
+      song-card(v-for="song in songs" :song="song" :key="song.id")
 </template>
 
 <script lang="ts">

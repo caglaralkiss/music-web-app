@@ -4,7 +4,7 @@
       .home__header__main {{ $t('songs.title') }}
       .home__header__sub {{ $t('songs.subTitle') }}
     .home__cards
-      song-card(v-for="song in songs" :song="song")
+      song-card(v-for="song in songs" :song="song" :key="song.id")
 </template>
 
 <script lang="ts">
