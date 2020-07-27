@@ -5,8 +5,13 @@
         .shell__header__banner__logo: font-awesome-icon.fa-logo(icon="music" size="lg")
         .shell__header__banner__title: h1 Musicify
       .shell__header__nav
-          router-link(to="/auth/register") {{ $t('auth.register') }}
-          router-link(to="/auth/login") {{ $t('auth.login') }}
+          router-link(v-if="!isAuthenticated" to="/auth/register") {{ $t('auth.register') }}
+          router-link(v-if="!isAuthenticated" to="/auth/login") {{ $t('auth.login') }}
+          router-link.shell__header__nav__user(v-if="isAuthenticated" to="/user") {{ email }}
+          router-link.shell__header__nav__user(
+            v-if="isAuthenticated"
+            to="/auth/login"
+            @click.native="logoutHandler") Logout
     .shell__body
       .shell__body__nav
         router-link.shell__body__nav__item(:class="currentRouteName === 'home' ? 'active' : ''" to="home")
@@ -24,12 +29,25 @@
 
 import { Vue, Component } from 'vue-property-decorator'
 import AudioPlayer from '@/components/shared/AudioPlayer.vue'
+import { Action, Getter } from 'vuex-class'
+
+const namespace: string = 'auth'
+
 @Component({
   components: { AudioPlayer }
 })
 export default class Shell extends Vue {
+  @Action('logout', { namespace }) logout!: () => {}
+  @Getter('isAuthenticated', { namespace }) isAuthenticated!: boolean
+  @Getter('email', { namespace }) email!: string
+
   get currentRouteName() {
     return this.$route.name
+  }
+
+  logoutHandler() {
+    this.logout()
+    this.$router.push('/auth/login')
   }
 }
 
