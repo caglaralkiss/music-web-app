@@ -20,7 +20,27 @@
   },
   "shell": {
     "home": "Home",
-    "search": "Search"
+    "search": "Search",
+    "upload": "Upload"
+  },
+  "song": {
+    "pageTitle": "Upload Song",
+    "title": "Song Title",
+    "album": "Album",
+    "artist": "Artist(s)",
+    "cover": "Cover Picture",
+    "audio": "Audio File",
+    "errors": {
+      "titleRequired": "You must enter a song title!",
+      "albumRequired": "You must specify an album that song belongs to!",
+      "artistsRequired": "You must enter the artist or artists! For multiple artists, separate them with comma without space!",
+      "coverRequired": "You must upload a cover picture with 200x200 pixel format!",
+      "audioFile": "You must upload the audio file!",
+      "maxFileSizeExceedCover": "Cover can not exceed 20MB",
+      "maxFileSizeExceedAudio": "Audio can not exceed 20MB",
+      "notExpectedFileExtensionCover": "Cover can be only be .jpeg file",
+      "notExpectedFileExtensionAudio": "Audio can only be .mp3 file"
+    }
   },
   "songs": {
     "title": "Songs",

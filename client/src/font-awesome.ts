@@ -10,6 +10,7 @@ import { faRedoAlt } from '@fortawesome/free-solid-svg-icons/faRedoAlt'
 import { faPauseCircle } from '@fortawesome/free-regular-svg-icons/faPauseCircle'
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp'
 import { faVolumeMute } from '@fortawesome/free-solid-svg-icons/faVolumeMute'
+import { faUpload } from '@fortawesome/free-solid-svg-icons/faUpload'
 
 export const loadIcons = () => {
   library.add(
@@ -23,6 +24,7 @@ export const loadIcons = () => {
     faStepForward,
     faRedoAlt,
     faVolumeUp,
-    faVolumeMute
+    faVolumeMute,
+    faUpload
   )
 }

@@ -20,6 +20,9 @@
         router-link.shell__body__nav__item(:class="currentRouteName === 'search' ? 'active' : ''" to="search")
           font-awesome-icon.fa-logo(icon="search" size="lg")
           h2 {{ $t('shell.search') }}
+        router-link.shell__body__nav__item(:class="currentRouteName === 'upload' ? 'active' : ''" to="upload")
+          font-awesome-icon.fa-logo(icon="upload" size="lg")
+          h2 {{ $t('shell.upload') }}
       .shell__body__main
         router-view
     .shell__footer: audio-player

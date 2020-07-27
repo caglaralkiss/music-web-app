@@ -19,8 +19,28 @@
     "notLogin": "Zaten bir hesabın var mı?"
   },
   "shell": {
-    "home": "Ana sayfa",
-    "search": "Ara"
+    "home": "Ana Sayfa",
+    "search": "Ara",
+    "upload": "Şarkı Yükle"
+  },
+  "song": {
+    "pageTitle": "Şarkı Yükle",
+    "title": "Şarkı İsmi",
+    "album": "Albüm",
+    "artist": "Şarkıcı(lar)",
+    "cover": "Albüm Kapağı",
+    "audio": "Şarkı Dosyası",
+    "errors": {
+      "titleRequired": "Bir şarkı ismi belirtmelisin!",
+      "albumRequired": "Şarkının hangi albümde olduğunu belirtmelisin!",
+      "artistsRequired": "Şarkıcı veya şarkıcıları belirtmelisin! Birden fazla şarkıcı varsa virgülle boşluksuz bir şekilde yazmalısın",
+      "coverRequired": "200'e 200 boyutunda bir albüm kapağı eklemelisin!",
+      "audioFile": "Şarkı dosyasını yüklemelisin!",
+      "maxFileSizeExceedCover": "Kapak fotoğrafı 20MB'ı geçemez!",
+      "maxFileSizeExceedAudio": "Ses dosyası 20MB'ı geçemez!",
+      "notExpectedFileExtensionCover": "Kapak fotoğrafı sadece .jpeg formatında olabilir!",
+      "notExpectedFileExtensionAudio": "Ses dosyası sadece .mp3 formatında olabilir!"
+    }
   },
   "songs": {
     "title": "Şarkılar",

@@ -26,6 +26,11 @@ const route: RouteConfig = {
       path: 'home',
       name: 'home',
       component: () => import(/* webpackChunkName: "home" */ '../components/Home.vue')
+    },
+    {
+      path: 'upload',
+      name: 'upload',
+      component: () => import(/* webpackChunkName: "upload" */ '../components/UploadSong.vue')
     }
   ]
 }

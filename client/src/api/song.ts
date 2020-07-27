@@ -3,6 +3,15 @@ import { AxiosResponse } from 'axios'
 import { Api } from '@/api/axios'
 import { Endpoint } from '@/config'
 
+interface SongRequest {
+  title: string,
+  album: string,
+  artist: Array<String>
+  cover: File,
+  audio: File,
+  owner: string
+}
+
 export function getSongs(params: {
   pageNum: number,
   offset: number,
@@ -13,4 +22,24 @@ export function getSongs(params: {
     method: 'get',
     params
   })
+}
+
+export function postSong(req: SongRequest): Promise<AxiosResponse<void>> {
+  return Api.request({
+    url: Endpoint.SONG,
+    method: 'post',
+    data: createFormData(req),
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
+function createFormData(data: SongRequest) {
+  const formData = new FormData()
+
+  Object.entries(data)
+    .forEach(([key, value]) => formData.append(key, value))
+
+  return formData
 }
