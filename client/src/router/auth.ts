@@ -1,9 +1,20 @@
 import { RouteConfig } from 'vue-router/types/router'
 import Auth from '@/views/Auth.vue'
+import store from '@/store'
 
 const route: RouteConfig = {
   path: '/auth',
   component: Auth,
+  beforeEnter: async (to, from, next) => {
+    try {
+      await store.dispatch('auth/checkAuth')
+
+      next('/home')
+    } catch (e) {
+      next()
+    }
+  },
+  redirect: 'auth/login',
   children: [
     {
       path: 'login',
