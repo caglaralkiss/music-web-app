@@ -3,17 +3,8 @@ import { Endpoint } from '@/config'
 import { LoginSubmit, RegisterSubmit } from '@/interfaces'
 import { AxiosResponse } from 'axios'
 
-export const TOKEN_KEY = 'T0K3N'
-
-export function setToken(jwt: string) {
-  window.sessionStorage.setItem(TOKEN_KEY, jwt)
-  Api.defaults.headers.common['Authorization'] = `Bearer ${jwt}`
-}
-
-export function clearToken() {
-  window.sessionStorage.removeItem(TOKEN_KEY)
-  delete Api.defaults.headers.common['Authorization']
-}
+export const setTokenHeader = (token: string) => { Api.defaults.headers.common['Authorization'] = `Bearer ${token}` }
+export const purgeTokenHeader = () => { delete Api.defaults.headers.common['Authorization'] }
 
 export function login(user: LoginSubmit): Promise<AxiosResponse<{ token: string }>> {
   return Api.request({
