@@ -14,13 +14,13 @@
             @click.native="logoutHandler") Logout
     .shell__body
       .shell__body__nav
-        router-link.shell__body__nav__item(:class="currentRouteName === 'home' ? 'active' : ''" to="home")
+        router-link.shell__body__nav__item(:class="currentRouteName === 'home' ? 'active' : ''" to="/home")
           font-awesome-icon.fa-logo(icon="home" size="lg")
           h2 {{ $t('shell.home') }}
-        router-link.shell__body__nav__item(:class="currentRouteName === 'search' ? 'active' : ''" to="search")
+        router-link.shell__body__nav__item(:class="currentRouteName === 'search' ? 'active' : ''" to="/search")
           font-awesome-icon.fa-logo(icon="search" size="lg")
           h2 {{ $t('shell.search') }}
-        router-link.shell__body__nav__item(:class="currentRouteName === 'upload' ? 'active' : ''" to="upload")
+        router-link.shell__body__nav__item(:class="currentRouteName === 'upload' ? 'active' : ''" to="/upload")
           font-awesome-icon.fa-logo(icon="upload" size="lg")
           h2 {{ $t('shell.upload') }}
       .shell__body__main
