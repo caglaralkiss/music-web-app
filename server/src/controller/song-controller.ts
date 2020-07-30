@@ -20,9 +20,18 @@ export class SongController implements Controller {
         this._fs = fs;
     }
 
-    async get(req: AppRequest): Promise<HttpResponse<Iterable<Song> | PagedResult<Song>>> {
+    async get(req: AppRequest): Promise<HttpResponse<Song | Iterable<Song> | PagedResult<Song>>> {
         try {
-            const { pageNum, offset, search } = req.queryStringObj;
+            const { id, pageNum, offset, search } = req.queryStringObj;
+
+            if (id) {
+              const song = await this._songService.getSong(id)
+
+              return new ResponseBuilder<Song>()
+                .setStatus(StatusCode.OK)
+                .setPayload(song)
+                .build();
+            }
 
             const page: Page = {
                 pageNum: Number(pageNum),
