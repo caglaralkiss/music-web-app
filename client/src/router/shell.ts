@@ -31,6 +31,11 @@ const route: RouteConfig = {
       path: 'upload',
       name: 'upload',
       component: () => import(/* webpackChunkName: "upload" */ '../components/UploadSong.vue')
+    },
+    {
+      path: 'song/:id',
+      name: 'song',
+      component: () => import(/* webpackChunkName: "song" */ '../components/SongDetail.vue')
     }
   ]
 }

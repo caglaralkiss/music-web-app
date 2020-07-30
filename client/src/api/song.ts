@@ -12,6 +12,14 @@ interface SongRequest {
   owner: string
 }
 
+export function getSong(params: { id: string }): Promise<AxiosResponse<Song>> {
+  return Api.request({
+    url: Endpoint.SONG,
+    method: 'get',
+    params
+  })
+}
+
 export function getSongs(params: {
   pageNum: number,
   offset: number,
@@ -32,6 +40,14 @@ export function postSong(req: SongRequest): Promise<AxiosResponse<void>> {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
+  })
+}
+
+export function deleteSong(params: { id: string }): Promise<AxiosResponse<void>> {
+  return Api.request({
+    url: Endpoint.SONG,
+    method: 'delete',
+    params
   })
 }
 

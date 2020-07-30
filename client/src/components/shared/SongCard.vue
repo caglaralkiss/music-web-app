@@ -1,9 +1,9 @@
 <template lang="pug">
-  .song-card
+  .song-card(@click="navigateSongDetail")
     lazy-image.song-card__image(:src="song.cover")
     .song-card__overlay
       .song-card__overlay__artist(:title="song.artist") {{ song.artist }}
-      font-awesome-icon.song-card__overlay__logo(:icon="faIconClasses" size="sm" @click="playSong")
+      font-awesome-icon.song-card__overlay__logo(:icon="faIconClasses" size="sm" @click.stop="playSong")
       .song-card__overlay__title(:title="song.title") {{ song.title }}
 </template>
 
@@ -31,6 +31,10 @@ export default class SongCard extends Vue {
 
   playSong() {
     this.loadSong(this.song)
+  }
+
+  navigateSongDetail() {
+    this.$router.push(`song/${this.song.id}`)
   }
 }
 

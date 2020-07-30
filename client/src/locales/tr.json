@@ -30,6 +30,8 @@
     "artist": "Şarkıcı(lar)",
     "cover": "Albüm Kapağı",
     "audio": "Şarkı Dosyası",
+    "Play": "Çal",
+    "Delete": "Sil",
     "errors": {
       "titleRequired": "Bir şarkı ismi belirtmelisin!",
       "albumRequired": "Şarkının hangi albümde olduğunu belirtmelisin!",

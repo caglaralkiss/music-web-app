@@ -30,6 +30,8 @@
     "artist": "Artist(s)",
     "cover": "Cover Picture",
     "audio": "Audio File",
+    "play": "Play",
+    "delete": "Delete",
     "errors": {
       "titleRequired": "You must enter a song title!",
       "albumRequired": "You must specify an album that song belongs to!",
