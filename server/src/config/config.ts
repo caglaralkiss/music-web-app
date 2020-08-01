@@ -12,9 +12,9 @@ export enum Environment {
 export interface ConfigParams {
     port: number,
     environment: string,
-    secret: string
     db?: string,
     hashSalt?: string,
+    secret: string
     url?: string
 }
 
@@ -47,11 +47,11 @@ export class Config {
     }
 
     get hashSalt(): string {
-        return this.configParams.hashSalt ? this.configParams.hashSalt : 'def*salt*34*12'
+        return this.configParams.hashSalt;
     }
 
     get secret(): string {
-        return this.configParams.secret ? this.configParams.secret : 'its*def*secret';
+        return this.configParams.secret;
     }
 
     get url(): string {
@@ -59,35 +59,27 @@ export class Config {
     }
 
     private _loadConfig(envType: string): void {
+        const common: Partial<ConfigParams> = {
+            db: path.resolve('.') + '/.data/',
+            port: process.env.PORT ? Number(process.env.PORT) : 3000,
+            secret: process.env.SECRET ? process.env.SECRET : 'i*am*secret'
+        };
+
         switch (envType) {
-            case Environment.DEVELOPMENT:
-                this.configParams = {
-                    environment: Environment.DEVELOPMENT,
-                    port: 3000,
-                    db: path.resolve('.') + '/.data/',
-                    hashSalt: 'salt*my*tequila*123',
-                    secret: 'i*am*secret',
-                    url: 'http://localhost:3000',
-                };
-                break;
             case Environment.PRODUCTION:
                 this.configParams = {
+                    ...common as ConfigParams,
                     environment: Environment.PRODUCTION,
-                    port: 4000,
-                    db: path.resolve('.') + '/.data/',
-                    hashSalt: process.env.HASH_SALT,
-                    secret: process.env.SECRET,
-                    url: process.env.URL,
+                    hashSalt: process.env.HASH_SALT || 'def*salt*34*12',
+                    url: process.env.URL + ':' + common.port,
                 };
                 break;
             default:
                 this.configParams = {
+                    ...common as ConfigParams,
                     environment: Environment.DEVELOPMENT,
-                    port: 3000,
-                    db: path.resolve('.') + '/.data/',
                     hashSalt: 'salt*my*tequila*123',
-                    secret: 'i*am*secret',
-                    url: 'http://localhost:3000'
+                    url: 'http://localhost:' + common.port,
                 };
                 break;
         }
