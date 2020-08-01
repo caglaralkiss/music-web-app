@@ -2,7 +2,7 @@ import { Song } from "../domain";
 import { Page, PagedResult } from '../util/pagination';
 
 export interface SongService {
-    getSongs(params: { page?: Page, search?: string }): Promise<Iterable<Song> | PagedResult<Song>>;
+    getSongs(params: { page?: Page, search?: string }): Promise<PagedResult<Song>>;
 
     getSong(id: string): Promise<Song>;
 

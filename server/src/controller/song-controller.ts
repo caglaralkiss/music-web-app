@@ -20,12 +20,12 @@ export class SongController implements Controller {
         this._fs = fs;
     }
 
-    async get(req: AppRequest): Promise<HttpResponse<Song | Iterable<Song> | PagedResult<Song>>> {
+    async get(req: AppRequest): Promise<HttpResponse<Song | PagedResult<Song>>> {
         try {
             const { id, pageNum, offset, search } = req.queryStringObj;
 
             if (id) {
-              const song = await this._songService.getSong(id)
+              const song = this.appendUrl(await this._songService.getSong(id))
 
               return new ResponseBuilder<Song>()
                 .setStatus(StatusCode.OK)
@@ -38,11 +38,16 @@ export class SongController implements Controller {
                 offset: Number(offset)
             }
 
-            const songs = await this._songService.getSongs({ page, search });
+            let pagedResult = await this._songService.getSongs({ page, search });
 
-            return new ResponseBuilder<Iterable<Song> | PagedResult<Song>>()
+            pagedResult = {
+                ...pagedResult,
+                result: this.appendUrls(pagedResult.result)
+            }
+
+            return new ResponseBuilder<PagedResult<Song>>()
                 .setStatus(StatusCode.OK)
-                .setPayload(songs)
+                .setPayload(pagedResult)
                 .build();
         } catch (e) {
             return this._errorHandler(e);
@@ -63,8 +68,8 @@ export class SongController implements Controller {
                     title: title as string,
                     album: album as string,
                     artist,
-                    cover: `${this.URL}/${ApiEndpoint.IMAGE}?id=${id}`,
-                    audio: `${this.URL}/${ApiEndpoint.AUDIO}?id=${id}`,
+                    cover: `${ApiEndpoint.IMAGE}?id=${id}`,
+                    audio: `${ApiEndpoint.AUDIO}?id=${id}`,
                     owner: req.id
                 };
                 await Promise.all<void, void, void>([
@@ -89,6 +94,7 @@ export class SongController implements Controller {
     async delete(req: AppRequest): Promise<HttpResponse> {
         try {
             const {id} = req.queryStringObj;
+            console.log(id)
             await this._songService.deleteSong(id);
 
             return new ResponseBuilder().setStatus(StatusCode.OK).build();
@@ -154,5 +160,17 @@ export class SongController implements Controller {
         const read$ = this._fs.createReadStream(readPath);
         const write$ = this._fs.createWriteStream(writePath);
         read$.pipe(write$);
+    }
+
+    private appendUrl(song: Song): Song {
+        return {
+            ...song,
+            audio: `${this.URL}/${song.audio}`,
+            cover: `${this.URL}/${song.cover}`,
+        }
+    }
+
+    private appendUrls(songs: Array<Song>): Array<Song> {
+        return songs.map(song => this.appendUrl(song))
     }
 }

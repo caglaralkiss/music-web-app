@@ -32,7 +32,7 @@ export class SongServiceImpl implements SongService {
         return await this._songRepository.findById(id);
     }
 
-    async getSongs(params: { search?: string, page: Page}): Promise<Iterable<Song> | PagedResult<Song>> {
+    async getSongs(params: { search?: string, page: Page}): Promise<PagedResult<Song>> {
         const { search, page } = params
 
         const songs = Array.from<Song>(await this._songRepository.findAll())
