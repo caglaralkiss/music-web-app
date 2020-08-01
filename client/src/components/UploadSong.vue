@@ -53,7 +53,7 @@
 <script lang="ts">
 
 import { Vue, Component } from 'vue-property-decorator'
-import { postSong } from '@/api'
+import { extractErrorMessage, postSong } from '@/api'
 import { Getter } from 'vuex-class'
 
 const namespace: string = 'auth'
@@ -125,8 +125,10 @@ export default class UploadSong extends Vue {
         artist: this.extractArtists(artist),
         owner: this.email
       })
+      this.$message.success(title + ' uploaded successfully!')
+      await this.$router.push('home')
     } catch (e) {
-      this.$message.error(e)
+      this.$message.error(extractErrorMessage(e))
     }
   }
 
