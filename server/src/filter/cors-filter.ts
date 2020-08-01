@@ -13,7 +13,7 @@ export class CorsFilter implements Filter {
         const headers = {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Request-Method': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS, GET',
+            'Access-Control-Allow-Methods': 'OPTIONS, GET, DELETE',
             'Access-Control-Allow-Headers': '*',
         };
 
