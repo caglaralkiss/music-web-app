@@ -10,7 +10,7 @@ import {AppRequest, ContentType, HttpMethod, StatusCode} from "../core/http";
 import {parseBody} from "./helpers";
 import * as URL from 'url';
 import {Route, Router} from "../core/router";
-import RoutesRoot from "../routes/routes-root";
+import RoutesRoot from "../routes";
 
 function httpServer(): Server {
     let router: Router = createRouter();
