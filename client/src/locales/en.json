@@ -15,7 +15,7 @@
       "invalidEmail": "Email must be in email format",
       "invalidPassword": "Password must include one digit, one lowercase, one uppercase letter and at least 8 chars."
     },
-    "notRegistered": "'Don't you have an account?",
+    "notRegistered": "Don't you have an account?",
     "notLogin": "Do you have already an account?"
   },
   "shell": {
