@@ -94,7 +94,6 @@ export class SongController implements Controller {
     async delete(req: AppRequest): Promise<HttpResponse> {
         try {
             const {id} = req.queryStringObj;
-            console.log(id)
             await this._songService.deleteSong(id);
 
             return new ResponseBuilder().setStatus(StatusCode.OK).build();
